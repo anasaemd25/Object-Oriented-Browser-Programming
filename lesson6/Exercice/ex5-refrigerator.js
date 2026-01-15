@@ -76,7 +76,6 @@ class Refrigerator{
     }
 }
 
-
 let r = new Refrigerator();
 let apple = new Food('Apple', 2);
 let bananas = new Food('Banana', 3);
@@ -89,53 +88,3 @@ r.getAndEatFood('Banana');
 r.getAndEatFood('Apple');
 r.getAndEatFood('Kiwi');
 r.getContents();
-
-
-
-
-
-/*
-class Refrigerator{
-    constructor(contents){
-        this.contents = [];
-    }
-
-    putFood(typeOfFood, quantity){
-        if(typeOfFood === this.contents){
-            this.quantity++;
-        }else{
-            console.log("Sorry, no such food in this refrigerator!");
-        }
-    }
-
-    Refrigerator(){
-
-    }
-
-    getAndEatFood(){
-        if(this.quantity > 0 && this.typeOfFood === this.contents){
-            console.log("Slurp! One", this.typeOfFood, "eaten.", this.quantity, "remaning")
-        }
-    }
-
-    getContents(){
-        console.log(
-            "-----------",
-            "|", this.typeOfFood. this.quantity,
-            "-----------"
-        );
-    }
-}
-
-let r = new Refrigerator();
-let apple = new Food('Apple', 2);
-let bananas = new Food('Banana', 3);
-r.putFood(apple);
-r.putFood(bananas);
-r.getContents();
-r.getAndEatFood('Apple');
-r.getAndEatFood('Apple');
-r.getAndEatFood('Banana');
-r.getAndEatFood('Apple');
-r.getContents();
-*/

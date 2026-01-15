@@ -53,14 +53,23 @@ class Refrigerator{
     }
 
     getAndEatFood(typeOfFood){
-        
+        let found = false;
+        for (let i = 0; i < this.foodStorage.length; i++) {
+            if (typeOfFood.toLowerCase() === this.foodStorage[i].type.toLowerCase()) {
+                this.foodStorage[i].eatOne();
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            console.log("Sorry, no such food in this refrigerator!");
+        }
     }
 
     getContents(){
         console.log("-----------");
         // Print contents
         for(let i = 0; i < this.foodStorage.length; i++){
-            // console.log(this.foodStorage[i]);
             console.log("|", this.foodStorage[i].type, this.foodStorage[i].qty)
         }
         console.log("-----------")
@@ -78,6 +87,7 @@ r.getAndEatFood('Apple');
 r.getAndEatFood('Apple');
 r.getAndEatFood('Banana');
 r.getAndEatFood('Apple');
+r.getAndEatFood('Kiwi');
 r.getContents();
 
 

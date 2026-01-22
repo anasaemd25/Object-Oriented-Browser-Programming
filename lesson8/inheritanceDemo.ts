@@ -31,7 +31,7 @@ interface CourseGrade {
 class Student extends Person {
     classIdentifier: string;
     dateOfAdmission: string;
-    completedCourses: CourseGrade[];
+    #completedCourses: CourseGrade[];
 
     constructor(
         name: string, 
@@ -45,16 +45,15 @@ class Student extends Person {
         //this.classIdentifier = classId;
         this.classIdentifier = this.#generateClassIdentifier(classId);
         this.dateOfAdmission = doa;
-        this.completedCourses = [];
+        this.#completedCourses = [];
     }
 
-    //mothod to generate class identifier based on admission year (available only internally)
-    #generateClassIdentifier(curriculum: string,): string {
-        // some logic to generate the identifier
-        return "Genetaed Cladd ID";
+    // method to generate class identifier based on admission year
+    #generateClassIdentifier(curriculum: string): string {
+        // some logic to generate class identifier
+        return "GeneratedClassID";
     }
 
-    // void significa que no devuelve nada
     displayInfo(): void {
         // super.displayInfo();
         // console.log(`Class Identifier: ${this.classIdentifier}`);
@@ -63,46 +62,53 @@ class Student extends Person {
         console.log('This is overridden method from Person class');
     }
 
-    addCompletedCourse(courseName: string, courseId: string, grade: number): void {
+    addCompletedCourse(courseName: string, courseId: string, grade: number) {
         let newCourseGrade: CourseGrade = {
             courseName: courseName,
             courseId: courseId,
             grade: grade
         }
-        this.completedCourses.push(newCourseGrade);
+        this.#completedCourses.push(newCourseGrade);
     }
 
-    calculateGPA(): number {
-        if (this.completedCourses.length == 0){
-            return 0;
-        }
-        let sumGrades = this.completedCourses.reduce((sum, course)=> sum + course.grade, 0);
-        let GPA = sumGrades / this.completedCourses.length;
-        return GPA;
+    get completedCourses(): CourseGrade[] {
+
+        // we could have here some other logic if needed
+        // but now just return the private field directely
+        return this.#completedCourses;
     }
 
-    getHighestGrade(): number{
-        if(this.completedCourses.length == 0){
-            return 0;
-        }
-        let grades = this.completedCourses.map(course => course.grade);
-        let highestGrade = Math.max(...grades);
-        return highestGrade;
+    // alternative getter syntax with regular method
+    getCompletedCourses(): CourseGrade[] {
+        return this.#completedCourses;
     }
+
+    set completedCourses(value: CourseGrade[]) {
+        // we can have anylogic here if needed, for example some validation or something else
+        this.#completedCourses = value;
+    }
+    
+    // alternative setter syntax with regular method
+    setCompletedCourses(value: CourseGrade[]) {
+        this.#completedCourses = value;
+    }
+
+    // Then implement functionality to calculate the GPA of a student -> print to console. 
 }
 
 let test = new Student("John Doe", "1.1.2000", "john@school.com", "Demo Road 1", "DIN25SP", "1.8.2025");
 test.displayInfo();
+console.log(test.completedCourses);
+console.log(test.getCompletedCourses());
+console.log(test.dateOfAdmission);
+// console.log(test.#generateClassIdentifier("DIN25SP"));  This should give an error because the method is private
+
+test.addCompletedCourse("Mathematics", "YY001-1001", 4);
 console.log(test);
+test.completedCourses = [];  // This should give an error because completedCourses has no setter
+test.setCompletedCourses([]); // This should work via the regular method implementation
 
-test.addCompletedCourse("Mathematics", "YY001-1001", 5);
-test.addCompletedCourse("OOBP", "YY001-1111", 3);
-test.addCompletedCourse("Suomi", "YY001-222", 5);
-test.addCompletedCourse("Java", "YY001-9999", 2);
-test.addCompletedCourse("Physics", "YY001-6969", 1);
+test.classIdentifier = "some new value";
+
+// Add at least four courses to your test student and scompleted.
 console.log(test);
-
-// Add 4 courses to your test student and completed
-// Implement functionality to calculate the GPA of a student print to console
-
-console.log("GPA is:", test.calculateGPA(), "and highest grade is:", test.getHighestGrade());

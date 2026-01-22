@@ -1,13 +1,15 @@
-# Compiled JavaScript files from TypeScript
-*.js
+# Compiled JavaScript files from TypeScript (only in directories with TypeScript files)
+# Note: This is a workaround since we can't use conditional ignores
+# To properly exclude compiled TypeScript, run: git rm <file>.js after compiling
+# Or keep compiled JS files in a separate build/ directory
 *.js.map
+
+# Build outputs (uncomment if using a build directory)
+# dist/
+# build/
 
 # Node modules
 node_modules/
-
-# Build outputs
-dist/
-build/
 
 # IDE
 .vscode/

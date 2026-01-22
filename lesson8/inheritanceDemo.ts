@@ -42,9 +42,16 @@ class Student extends Person {
         doa: string
     ) {
         super(name, dob, email, address);
-        this.classIdentifier = classId;
+        //this.classIdentifier = classId;
+        this.classIdentifier = this.#generateClassIdentifier(classId);
         this.dateOfAdmission = doa;
         this.completedCourses = [];
+    }
+
+    //mothod to generate class identifier based on admission year (available only internally)
+    #generateClassIdentifier(curriculum: string,): string {
+        // some logic to generate the identifier
+        return "Genetaed Cladd ID";
     }
 
     // void significa que no devuelve nada
@@ -82,8 +89,6 @@ class Student extends Person {
         let highestGrade = Math.max(...grades);
         return highestGrade;
     }
-    
-
 }
 
 let test = new Student("John Doe", "1.1.2000", "john@school.com", "Demo Road 1", "DIN25SP", "1.8.2025");

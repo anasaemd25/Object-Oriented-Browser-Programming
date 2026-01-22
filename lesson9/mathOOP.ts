@@ -80,9 +80,9 @@ class Shape {
 }
 
 
-/* =======================================================
-   CLASE CIRCLE - HEREDA de Shape y SOBRESCRIBE métodos
-   ======================================================= */
+/*  =======================================================
+    CLASE CIRCLE - HEREDA de Shape y SOBRESCRIBE métodos
+    ======================================================= */
 class Circle extends Shape{
     private _radius: number; // Radio del círculo (propiedad ESPECÍFICA del círculo)
 
@@ -116,9 +116,9 @@ class Circle extends Shape{
 }
 
 
-/* =======================================================
-   CLASE RECTANGLE - HEREDA de Shape y SOBRESCRIBE métodos
-   ======================================================= */
+/*  =======================================================
+    CLASE RECTANGLE - HEREDA de Shape y SOBRESCRIBE métodos
+    ======================================================= */
 class Rectangle extends Shape {
     private _length: number; // Largo del rectángulo
     private _width: number;  // Ancho del rectángulo
@@ -164,10 +164,9 @@ class Rectangle extends Shape {
     }
 }
 
-
-/* =======================================================
-   PRUEBAS COMPLETAS - BLOQUES TRY-CATCH SEPARADOS
-   ======================================================= */
+/*  =======================================================
+    PRUEBAS COMPLETAS - BLOQUES TRY-CATCH SEPARADOS
+    ======================================================= */
 
 // 1. PRUEBA Shape (solo movimiento y validación, NO calculateArea)
 try {

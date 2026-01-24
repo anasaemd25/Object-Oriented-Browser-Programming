@@ -188,3 +188,33 @@ console.log("Scale factor:", miCirculo.radius); // 15 ✅
 console.log("Radio del círculo:", miCirculo.radius);
 console.log("¿Está el punto (12,22) dentro?", miCirculo.containsPoint(12, 22)); // true
 console.log("¿Está el punto (20,30) dentro?", miCirculo.containsPoint(100, 300)); // false
+// --- PRUEBAS PARA RECTANGLE ---
+console.log("Pruebas para Rectangulo");
+const miRectangulo = new Rectangle(5, 10, "Blue", 20, 15);
+
+console.log("Posición:", miRectangulo.x, miRectangulo.y); // 5 10
+console.log("Color:", miRectangulo.color); // Blue
+console.log("Área:", miRectangulo.calculateArea()); // 300
+console.log("Perímetro:", miRectangulo.calculatePerimeterLength()); // 70
+console.log("¿Es cuadrado?", miRectangulo.isSquare()); // false
+console.log("Esquinas:", miRectangulo.getCorners());
+// [
+//   {x: 5, y: 10}, 
+//   {x: 25, y: 10}, 
+//   {x: 5, y: 25}, 
+//   {x: 25, y: 25}
+// ]
+console.log("¿Está el punto (10,15) dentro?", miRectangulo.containsPoint(10, 15)); // true
+console.log("¿Está el punto (30,30) dentro?", miRectangulo.containsPoint(30, 30)); // false
+
+// Probar scale
+miRectangulo.scale(2);
+console.log("Nuevo ancho y largo tras escalar x2:", miRectangulo.calculateArea(), miRectangulo.calculatePerimeterLength());
+// Área: 1200, Perímetro: 140
+console.log("Nuevas esquinas tras escalar:", miRectangulo.getCorners());
+// [
+//   {x: 5, y: 10}, 
+//   {x: 45, y: 10}, 
+//   {x: 5, y: 50}, 
+//   {x: 45, y: 50}
+// ]

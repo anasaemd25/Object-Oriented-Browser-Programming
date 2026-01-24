@@ -1,230 +1,190 @@
-/*
-Exercise 1: Core Shape Properties - CLASE BASE Y SUBCLASES
-Requisitos:
-· Propiedades privadas x, y (coordenadas del centro para círculo, esquina superior izquierda para rectángulo)
-· Propiedad privada color
-· Getters/setters públicos para posición y color
-· Métodos moveTo() y moveBy() para movimiento
-· calculateArea() y calculatePerimeterLength() que deben ser sobrescritos
-*/
-
 class Shape {
-    // Propiedades PRIVADAS con convención _nombre (o usar #nombre en TypeScript moderno)
-    private _x: number; // Coordenada X del centro/esquina superior izquierda
-    private _y: number; // Coordenada Y del centro/esquina superior izquierda  
-    private _color: string; // Color de la figura
+    private _x: number;
+    private _y: number;
+    private _color: string;
 
-    // Constructor: inicializa posición y color
     constructor(x: number, y: number, color: string){
         this._x = x;
         this._y = y;
         this._color = color;
     }
-    
-    // GETTERS: permiten LEER las propiedades privadas
-    public get x(): number {
-        return this._x; 
+
+    public get x(): number{
+        return this._x;
     }
 
-    public get y(): number {
-        return this._y; 
+    public get y(): number{
+        return this._y;
     }
 
-    public get color(): string {
-        return this._color; 
+    public get color(): string{
+        return this._color;
     }
 
-    // SETTERS: permiten MODIFICAR propiedades con VALIDACIÓN
     public set x(value: number){
-        if(value < 0){
-            throw new Error("X can't be negative"); // Validación: coordenadas positivas
+        if (value < 0){
+            throw new Error ("X cant be negative");
         }
         this._x = value;
     }
 
     public set y(value: number){
-        if(value < 0){
-            throw new Error("Y can't be negative"); // Validación: coordenadas positivas
+        if (value < 0){
+            throw new Error ("Y cant be negative");
         }
         this._y = value;
     }
-
+    
     public set color(value: string){
-        if(value == " " || value.trim() === ""){
-            throw new Error("Can't be empty, input a color"); // Validación: color no vacío
+        if (value == " " || value.trim() == ""){
+            throw new Error ("Color can't be empty");
         }
         this._color = value;
     }
 
-    // MOVIMIENTO ABSOLUTO: establece nueva posición directamente
-    public moveTo(newX: number, newY: number): void {
-        this.x = newX;  // Usa setter para aplicar validación
+    public moveTo(newX: number, newY: number){
+        this.x = newX;
         this.y = newY;
     }
 
-    // MOVIMIENTO RELATIVO: mueve desde posición actual
-    public moveBy(dx: number, dy: number): void {
-        this.x += dx;  // Usa setter para aplicar validación
+    public moveBy(dx: number, dy: number){
+        this.x += dx;
         this.y += dy;
     }
 
-    // MÉTODO QUE DEBE SER SOBRESCRITO por las subclases
     public calculateArea(): number {
         throw new Error("calculateArea() must be implemented in subclasses");
+
     }
 
-    // MÉTODO QUE DEBE SER SOBRESCRITO por las subclases  
-    public calculatePerimeterLength(): number {
-        throw new Error("calculatePerimeterLength() must be implemented in subclasses");
+    public calculatePerimeterLength(): number{
+        throw new Error("calculateArea() must be implemented in subclasses");
     }
 }
 
-
-/*  =======================================================
-    CLASE CIRCLE - HEREDA de Shape y SOBRESCRIBE métodos
-    ======================================================= */
-class Circle extends Shape{
-    private _radius: number; // Radio del círculo (propiedad ESPECÍFICA del círculo)
+class Circle extends Shape {
+    private _radius: number;
 
     constructor(x: number, y: number, color: string, radius: number){
-        super(x, y, color); // LLAMA al constructor de la clase padre (Shape)
-        this._radius = radius; // IMPORTANTE: en constructor usa _campo directo, no el setter
+        super(x, y, color);
+        if (radius < 0){
+            throw new Error("Radius must be positive");
+        }
+        this._radius = radius;
     }
 
-    // Getter para leer el radio
-    public get radius(): number{
+    public get radius(): number {
         return this._radius;
     }
 
-    // Setter para modificar el radio CON VALIDACIÓN
     public set radius(value: number){
         if (value <= 0){
-            throw new Error("Radius must be positive"); // Validación específica del círculo
+            throw new Error ("Radius must be positive");
         }
         this._radius = value;
     }
 
-    // SOBRESCRIBE el método de Shape con la fórmula del CÍRCULO: π * r²
     public override calculateArea(): number {
         return Math.PI * this._radius * this._radius;
     }
 
-    // SOBRESCRIBE con la fórmula del perímetro del CÍRCULO: 2 * π * r
     public override calculatePerimeterLength(): number {
         return 2 * Math.PI * this._radius;
     }
+
+    public getDiameter(): number {
+        return this.radius * 2;
+    }
+
+    public setDiameter(diameter: number): void{
+        this.radius = diameter / 2;
+    }
+
+    public containsPoint(x: number, y: number): boolean {
+        const dx = x - this.x;
+        const dy = y - this.y;
+        const distancia = Math.sqrt(dx*dx + dy*dy);
+        return distancia <= this.radius;
+    }
+
+    public distanceToCenter(x: number, y: number): number{
+        let dx = x - this.x;
+        let dy = y - this.y;
+        return Math.sqrt(dx*dx + dy*dy);
+    }
+
+    public scale(factor: number): void {
+        this.radius = this.radius * factor;
+    }
 }
 
+class Rectangle extends Shape{
+    private _width: number;
+    private _length: number;
 
-/*  =======================================================
-    CLASE RECTANGLE - HEREDA de Shape y SOBRESCRIBE métodos
-    ======================================================= */
-class Rectangle extends Shape {
-    private _length: number; // Largo del rectángulo
-    private _width: number;  // Ancho del rectángulo
-
-    constructor(x: number, y: number, color: string, length: number, width: number){
-        super(x, y, color); // Constructor padre
-        this._length = length;  // IMPORTANTE: usa campo directo en constructor
-        this._width = width;
-    }
-
-    // Getters para leer dimensiones
-    public get length(): number{
-        return this._length;
-    }
-
-    public get width(): number{
-        return this._width;
-    }
-
-    // Setters con validación específica del rectángulo
-    public set length(value: number){
-        if (value <= 0){
-            throw new Error("Length must be positive");
-        }
-        this._length = value;
-    }
-
-    public set width(value: number){
-        if (value <= 0){
+    constructor(x: number, y: number, color: string, width: number, length: number){
+        super(x, y, color);
+        if (width <= 0){
             throw new Error("Width must be positive");
         }
-        this._width = value;
+        if (length <= 0){
+            throw new Error("Length must be positive")
+        }
+        this._width = width;
+        this._length = length;
     }
-
-    // SOBRESCRIBE: Área del rectángulo = largo * ancho
+    
     public override calculateArea(): number {
-        return this._length * this._width;
+        return this._width * this._length
     }
 
-    // SOBRESCRIBE: Perímetro del rectángulo = 2 * (largo + ancho)
     public override calculatePerimeterLength(): number {
-        return 2 * (this._length + this._width);
+        return 2 * (this._width + this._length);    
     }
+
+    public isSquare(): boolean{
+        if (this._width === this._length) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public getCorners(): {x: number, y: number}[] {
+        return [
+            { x: this.x, y: this.y }, // esquina superior izquierda
+            { x: this.x + this._width, y: this.y }, // esquina superior derecha
+            { x: this.x, y: this.y + this._length }, // esquina inferior izquierda
+            { x: this.x + this._width, y: this.y + this._length } // esquina inferior derecha
+        ];
+    }
+
+    public containsPoint(px: number, py: number): boolean {
+        return px >= this.x && px <= this.x + this._width &&
+            py >= this.y && py <= this.y + this._length;
+    }
+
+    public scale(factor: number): void {
+        this._width = this._width * factor;
+        this._length = this._length * factor;
+    }
+
+    // Consider: should x,y be top-left corner, center, or something else?
+    // Top-left
 }
 
-/*  =======================================================
-    PRUEBAS COMPLETAS - BLOQUES TRY-CATCH SEPARADOS
-    ======================================================= */
-
-// 1. PRUEBA Shape (solo movimiento y validación, NO calculateArea)
-try {
-    console.log("=== PRUEBA SHAPE (movimiento y validación) ===");
-    const myShape = new Shape(10, 20, "Red");
-
-    console.log(`Initial: (${myShape.x}, ${myShape.y}), Color: ${myShape.color}`);
-
-    myShape.moveTo(50, 60);
-    console.log(`After moveTo: (${myShape.x}, ${myShape.y})`); // Expected: (50, 60)
-
-    myShape.moveBy(10, -5);
-    console.log(`After moveBy: (${myShape.x}, ${myShape.y})`); // Expected: (60, 55)
-
-    myShape.color = "Blue";
-    console.log(`New Color: ${myShape.color}`);
-
-    console.log("Testing error handling on Shape.x...");
-    myShape.x = -10; // LANZA ERROR esperado
-} catch (error) {
-    if (error instanceof Error) {
-        console.error("✅ Caught expected error (Shape):", error.message);
-    } else {
-        console.error("❌ Unknown error:", error);
-    }
-}
-
-// 2. PRUEBA CIRCLE (área, perímetro y validación)
-try {
-    console.log("\n=== PRUEBA CIRCLE (área, perímetro, validación) ===");
-    const myCircle = new Circle(0, 0, "Green", 10);
-
-    console.log(`Circle radius: ${myCircle.radius}`);
-    console.log(`Circle area: ${myCircle.calculateArea().toFixed(2)}`);     // ~314.16
-    console.log(`Circle perimeter: ${myCircle.calculatePerimeterLength().toFixed(2)}`); // ~62.83
-
-    console.log("Testing error handling on Circle.radius...");
-    myCircle.radius = -5; // LANZA ERROR esperado
-} catch (error) {
-    if (error instanceof Error) {
-        console.error("✅ Caught expected error (Circle):", error.message);
-    }
-}
-
-// 3. PRUEBA RECTANGLE (área, perímetro y validación)
-try {
-    console.log("\n=== PRUEBA RECTANGLE (área, perímetro, validación) ===");
-    const myRectangle = new Rectangle(0, 0, "Yellow", 5, 8);
-
-    console.log(`Rectangle length: ${myRectangle.length}`);
-    console.log(`Rectangle width: ${myRectangle.width}`);
-    console.log(`Rectangle area: ${myRectangle.calculateArea()}`);           // 40
-    console.log(`Rectangle perimeter: ${myRectangle.calculatePerimeterLength()}`); // 26
-
-    console.log("Testing error handling on Rectangle.length...");
-    myRectangle.length = 0; // LANZA ERROR esperado
-} catch (error) {
-    if (error instanceof Error) {
-        console.error("✅ Caught expected error (Rectangle):", error.message);
-    }
-}
+// --- PRUEBAS ---
+const miCirculo = new Circle(10, 20, "Red", 5);
+console.log("Centro:", miCirculo.x, miCirculo.y);
+console.log("Radio:", miCirculo.radius);
+console.log("Área:", miCirculo.calculateArea());
+console.log("Perímetro:", miCirculo.calculatePerimeterLength());
+console.log("Diámetro:", miCirculo.getDiameter());
+miCirculo.setDiameter(20);
+console.log("Nuevo radio después de setDiameter(20):", miCirculo.radius);
+console.log("Distancia al punto (13,24):", miCirculo.distanceToCenter(13, 24));
+miCirculo.scale(3);
+console.log("Scale factor:", miCirculo.radius); // 15 ✅
+console.log("Radio del círculo:", miCirculo.radius);
+console.log("¿Está el punto (12,22) dentro?", miCirculo.containsPoint(12, 22)); // true
+console.log("¿Está el punto (20,30) dentro?", miCirculo.containsPoint(100, 300)); // false

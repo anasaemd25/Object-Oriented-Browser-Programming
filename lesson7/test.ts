@@ -26,3 +26,5 @@ function calSum(param1: number, param2: number) {
 }
 
 calSum(a, b);
+
+export { };

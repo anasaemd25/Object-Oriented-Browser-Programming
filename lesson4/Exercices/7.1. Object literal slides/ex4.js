@@ -1,54 +1,37 @@
+// ==========================================
+// USO DE .REDUCE()
+// ==========================================
+
 let countries = [
-    {
-        country: "Belgium",
-        capital: "Brussels",
-        language: ["Dutch", "French", "German"],
-        area: "3078km²",
-        population: 1090863,
-        GDP: "$50135",
-        iso3166: "BE"
-    },
-    {
-        country: "Germany",
-        capital: "Berlin",
-        language: ["German"],
-        area: "357022km²",
-        population: 83166711,
-        GDP: "$46000",
-        iso3166: "DE"
-    },
-    {
-        country: "France",
-        capital: "Paris",
-        language: ["French"],
-        area: "551695km²",
-        population: 67413000,
-        GDP: "$41400",
-        iso3166: "FR"
-    },
-    {
-        country: "Sweden",
-        capital: "Stockholm",
-        language: ["Swedish"],
-        area: "450295km²",
-        population: 10379295,
-        GDP: "$55400",
-        iso3166: "SE"
-    }
+    { country: "Belgium", population: 1090863 },
+    { country: "Germany", population: 83166711 },
+    { country: "France", population: 67413000 },
+    { country: "Sweden", population: 10379295 }
+    // (Se han omitido propiedades irrelevantes para este ejemplo para mayor claridad)
 ];
 
-function totalPop(popInfo){
-    let sum = popInfo.reduce((acc, curr) => acc + curr.population, 0)
+function totalPop(popInfo) {
+    // .reduce() se usa para "reducir" un array a un único valor (aquí, la suma total).
+    // Sintaxis: array.reduce((acumulador, elementoActual) => nuevaSuma, valorInicial)
+
+    let sum = popInfo.reduce((acc, curr) => {
+        // acc (acumulador): Guarda la suma acumulada hasta el momento.
+        // curr (actual): Es el objeto del país actual en la iteración.
+        // 0: Es el valor inicial de 'acc'.
+
+        return acc + curr.population; // Sumamos la población actual al acumulado
+    }, 0);
+
     console.log(sum);
 }
 
 totalPop(countries);
 
-
+// --- VERSIÓN ALTERNATIVA CLÁSICA (COMENTADA) ---
 /*
 let total = 0;
 for (const country of countries) {
-    total += country.population;
+    total += country.population; // Suma imperativa manual
 }
 console.log(total);
 */

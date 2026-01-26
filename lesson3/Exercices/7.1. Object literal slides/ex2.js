@@ -1,3 +1,9 @@
+// ==========================================
+// ARRAY DE OBJETOS E ITERACIÓN (FOR...OF)
+// ==========================================
+
+// Definimos un Array 'countries' que contiene múltiples objetos.
+// Cada elemento del array es un objeto {} independiente, separado por comas.
 let countries = [
     {
         country: "Belgium",
@@ -37,10 +43,19 @@ let countries = [
     }
 ];
 
-function countryPopulation(countryInfo){
-    for(let countryData of countryInfo ){
-        console.log(countryData.country +  " population " + countryData.population)
+// Función para imprimir la población de cada país.
+// Recibe como argumento 'countryInfo', que se espera sea un array de objetos.
+function countryPopulation(countryInfo) {
+
+    // Bucle FOR...OF: Una forma moderna y limpia de recorrer arrays.
+    // "Para cada 'countryData' (elemento individual) dentro de 'countryInfo' (el array)..."
+    // En cada iteración, 'countryData' toma el valor del objeto actual.
+
+    for (let countryData of countryInfo) {
+        // Accedemos a las propiedades del objeto actual usando el punto (.).
+        console.log(countryData.country + " population " + countryData.population)
     }
 }
 
+// Llamamos a la función pasando nuestro array de países.
 countryPopulation(countries);

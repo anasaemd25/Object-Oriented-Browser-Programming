@@ -1,46 +1,53 @@
 /*
-Exercise 4 (objects/exercises/4-classes.js): 
-Create a class for Food which allows the user to set the type of food and quantity. 
-The class should have a method, which can be used to eat the food and quantity 
-will decrease accordingly and a method to be able to describe what type of food it is.
-You should get this output:
-Banana
-Slurp! One banana eaten. 3 remaining
-Slurp! One banana eaten. 2 remaining
-Slurp! One banana eaten. 1 remaining
-Slurp! One banana eaten. 0 remaining
-Sorry, no more bananas remaining!
+EJERCICIO 4: CLASES (INTRODUCCIÓN)
+Objetivo: Crear una clase Food que gestione el tipo de comidad y la cantidad, 
+permitiendo "comer" (reducir cantidad) y describir la comida.
 */
 
-class Food{
-    constructor(typeOfFood, quantity){
-        this.type = typeOfFood;
-        this.qty = quantity;
+// DEFINICIÓN DE CLASE (ES6 Syntax)
+// Una clase es una plantilla para crear objetos. Es "azúcar sintáctico" sobre los prototipos de JS.
+class Food {
+    // EL CONSTRUCTOR
+    // Es un método especial que se ejecuta automáticamente al crear una nueva instancia con 'new'.
+    // Se usa para inicializar las propiedades del objeto.
+    constructor(typeOfFood, quantity) {
+        this.type = typeOfFood; // Propiedad: Tipo de comida (ej: 'Banana')
+        this.qty = quantity;    // Propiedad: Cantidad (ej: 4)
     }
 
-    whatIsThis(){
+    // MÉTODOS
+    // Funciones que pertenecen a la clase. No hace falta la palabra clave 'function'.
+
+    whatIsThis() {
         console.log(this.type);
     }
 
-    eatOne(){
-        if(this.qty > 0){
-            this.qty--;
+    eatOne() {
+        // Verificamos si queda comida antes de restar.
+        if (this.qty > 0) {
+            this.qty--; // Decrementamos la cantidad en 1.
             console.log("Slurp! One", this.type.toLowerCase(), "eaten.", this.qty, "remaining");
         }
-        else{
+        else {
             console.log("Sorry, no more", this.type.toLowerCase(), "remaining!")
         }
     }
 }
 
-let banana = new Food('Banana', 4); // Call to the constructor method
-let bread = new Food('Bread', 2);   // Extra
-banana.whatIsThis();
-banana.eatOne();
-banana.eatOne();
-banana.eatOne();
-banana.eatOne();
-banana.eatOne();
-bread.eatOne();
+// INSTANCIACIÓN
+// Creamos objetos concretos a partir de la clase Food.
+let banana = new Food('Banana', 4); // Llama al constructor('Banana', 4)
+let bread = new Food('Bread', 2);
+
+// USO DE MÉTODOS
+banana.whatIsThis(); // "Banana"
+
+banana.eatOne(); // Quedan 3
+banana.eatOne(); // Quedan 2
+banana.eatOne(); // Quedan 1
+banana.eatOne(); // Quedan 0
+banana.eatOne(); // "Sorry, no more..."
+
+bread.eatOne(); // Funciona independientemente para el pan.
 bread.eatOne();
 bread.eatOne();

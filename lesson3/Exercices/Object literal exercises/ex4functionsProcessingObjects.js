@@ -1,30 +1,38 @@
 /*
-Ex4 Functions processing objects
-Expand your Ex3 solution by writing a new function, which is named printStudentGPAInfo 
-and it accepts a student object, prints “XXX (ID: YYYY) has GPA of ZZZ” where:
-· XXX is student name
-· YYY is student ID
-· ZZZ is student GPA
+Ex4 Functions processing objects (Funciones procesando objetos)
+
+Objetivo:
+Expandir la solución anterior escribiendo una función 'printStudentGPAInfo' que:
+1. Acepte un objeto estudiante.
+2. Imprima “XXX (ID: YYYY) has GPA of ZZZ”.
 */
+
 let student = {
     name: "Joe",
     studentId: 1234,
-    grades: [3.39, 4.2, 4, 5]
+    grades: [3.39, 4.2, 4, 5] // Array de notas decimales
 };
 
-function calculateAverage(arrayOfNumbers){
+// Función auxiliar para calcular el promedio (reutilizada).
+function calculateAverage(arrayOfNumbers) {
     let sum = 0;
-    for(let i = 0; i < arrayOfNumbers.length; i++){
+    for (let i = 0; i < arrayOfNumbers.length; i++) {
         sum += arrayOfNumbers[i];
     }
-    let avg = sum/arrayOfNumbers.length;
-    return avg;
+    let avg = sum / arrayOfNumbers.length;
+    return avg; // Retorna el valor numérico
 }
 
-function printStudentGPAInfo(studentObject){
+// Función principal que procesa el objeto estudiante.
+function printStudentGPAInfo(studentObject) {
+    // 1. Calculamos el promedio pasando SOLAMENTE la propiedad .grades (que es un array) a la función de cálculo.
     let gpa = calculateAverage(studentObject.grades);
-    console.log(student.name + " (ID: " + student.studentId + ")" + " has a GPA of " + gpa.toFixed(2))
+
+    // 2. Imprimimos el resultado formateado.
+    // .toFixed(2) es un método de los números que devuelve un STRING con exactamente 2 decimales.
+    // Ej: si gpa es 4.1475, gpa.toFixed(2) devuelve "4.15".
+    console.log(studentObject.name + " (ID: " + studentObject.studentId + ")" + " has a GPA of " + gpa.toFixed(2))
 }
 
-// Call the new function
+// Llamada a la función pasando el objeto 'student' completo.
 printStudentGPAInfo(student);

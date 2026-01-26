@@ -1,70 +1,61 @@
 /*
-Exercise 5: Create a class for Refrigerator which is capable of storing food. 
-The class should have couple of different methods.
-· putFood – stores food in refrigerator
-· getAndEatFood – gets and consumes the specified food and amount from refrigerator, 
-indicates if there is no such food available, indicates if last food of the type was eaten
-· getContents – display list of what food and how many is inside the refrigerator
-Fill your refrigerator with different Foods and then eat them. 
-Validate the everything works as intended.
-Should give about the following output:
------------
-| Apple 2
-| Banana 3
------------
-Slurp! One apple eaten. 1 remaining
-Slurp! One apple eaten. 0 remaining
-Slurp! One banana eaten. 2 remaining
-Sorry, no such food in this refrigerator!
------------
-| Banana 2
------------
+EJERCICIO 5 (VERSIÓN TYPESCRIPT)
+Objetivo: Mismo ejercicio del refrigerador, pero usando TIPADO ESTÁTICO con TypeScript.
 */
 
-class Food{
-    type: string;
-    qty: number;
-    constructor(typeOfFood: string, quantity: number){
+class Food {
+    // EN TYPESCRIPT, DEBEMOS DECLARAR LAS PROPIEDADES DE LA CLASE.
+    // Esto no era necesario en JS puro (se declaraban en el constructor),
+    // pero TS necesita saber qué propiedades existen y de qué tipo son.
+    type: string; // La propiedad 'type' debe ser siempre un texto.
+    qty: number;  // La propiedad 'qty' debe ser siempre un número.
+
+    constructor(typeOfFood: string, quantity: number) {
+        // Validamos los tipos también en los argumentos del constructor.
         this.type = typeOfFood;
         this.qty = quantity;
     }
 
-    whatIsThis(){
+    whatIsThis() {
         console.log(this.type);
     }
 
-    eatOne(){
-        if(this.qty > 0){
+    eatOne() {
+        if (this.qty > 0) {
             this.qty--;
             console.log("Slurp! One", this.type.toLowerCase(), "eaten.", this.qty, "remaining");
         }
-        else{
+        else {
             console.log("Sorry, no more", this.type.toLowerCase(), "remaining!")
         }
     }
 }
 
-class Refrigerator{
+class Refrigerator {
+    // Declaramos un array que SOLO puede contener objetos de tipo 'Food'.
+    // Si intentamos meter un número o string aquí, TS dará error.
     foodStorage: Food[];
 
-    constructor(){
+    constructor() {
         this.foodStorage = [];
     }
 
-    putFood(food: Food){
-        // add food to the storage in this refrigerator
+    // El parámetro 'food' DEBE ser una instancia de la clase Food.
+    putFood(food: Food) {
         this.foodStorage.push(food);
     }
 
-    getAndEatFood(typeOfFood: string){
+    getAndEatFood(typeOfFood: string) {
         let found = false;
         for (let i = 0; i < this.foodStorage.length; i++) {
-            // Check the names, if they are same, then we have found our food
+
             if (typeOfFood.toLowerCase() === this.foodStorage[i].type.toLowerCase()) {
                 this.foodStorage[i].eatOne();
                 found = true;
-                if(this.foodStorage[i].qty == 0){
-                    // remove food when qty is 0
+
+                // Lógica adicional: Eliminar del array si se acaba.
+                if (this.foodStorage[i].qty == 0) {
+                    // .splice(índice, cantidad) elimina elementos del array.
                     this.foodStorage.splice(i, 1);
                 }
                 break;
@@ -75,15 +66,18 @@ class Refrigerator{
         }
     }
 
-    getContents(){
+    getContents() {
         console.log("-----------");
-        // Print contents
-        for(let i = 0; i < this.foodStorage.length; i++){
+        for (let i = 0; i < this.foodStorage.length; i++) {
             console.log("|", this.foodStorage[i].type, this.foodStorage[i].qty)
         }
         console.log("-----------")
     }
 }
+
+// USO
+// Aunque el código de uso es igual a JS, TS nos protege.
+// Ej: r.putFood("Manzana") daría error de compilación porque "Manzana" es string, no Food.
 
 let r = new Refrigerator();
 let apple = new Food('Apple', 2);

@@ -1,90 +1,100 @@
 /*
-Exercise 5: Create a class for Refrigerator which is capable of storing food. 
-The class should have couple of different methods.
-· putFood – stores food in refrigerator
-· getAndEatFood – gets and consumes the specified food and amount from refrigerator, 
-indicates if there is no such food available, indicates if last food of the type was eaten
-· getContents – display list of what food and how many is inside the refrigerator
-Fill your refrigerator with different Foods and then eat them. 
-Validate the everything works as intended.
-Should give about the following output:
------------
-| Apple 2
-| Banana 3
------------
-Slurp! One apple eaten. 1 remaining
-Slurp! One apple eaten. 0 remaining
-Slurp! One banana eaten. 2 remaining
-Sorry, no such food in this refrigerator!
------------
-| Banana 2
------------
+EJERCICIO 5: INTERACCIÓN ENTRE CLASES
+Objetivo: Crear una clase Refrigerator que almacene objetos de la clase Food.
+Esto demuestra la relación "TIENE-UN" (Composición/Agregación).
+Un Refrigerador TIENE (contiene) Comida.
 */
 
-class Food{
-    constructor(typeOfFood, quantity){
+class Food {
+    constructor(typeOfFood, quantity) {
         this.type = typeOfFood;
         this.qty = quantity;
     }
 
-    whatIsThis(){
+    whatIsThis() {
         console.log(this.type);
     }
 
-    eatOne(){
-        if(this.qty > 0){
+    eatOne() {
+        if (this.qty > 0) {
             this.qty--;
             console.log("Slurp! One", this.type.toLowerCase(), "eaten.", this.qty, "remaining");
         }
-        else{
+        else {
             console.log("Sorry, no more", this.type.toLowerCase(), "remaining!")
         }
     }
 }
 
-class Refrigerator{
-    constructor(){
+class Refrigerator {
+    constructor() {
+        // Inicializamos el almacenamiento como un array vacío.
+        // Aquí guardaremos las instancias de la clase Food.
         this.foodStorage = [];
     }
 
-    putFood(food){
-        // add food to the storage in this refrigerator
-        this.foodStorage.push(food);
+    // Método para meter comida en la nevera.
+    // Recibe un objeto 'food' (instancia de Food).
+    putFood(food) {
+        this.foodStorage.push(food); // Lo añadimos al array.
     }
 
-    getAndEatFood(typeOfFood){
-        let found = false;
+    // Método complejo: Busca un tipo de comida y la come.
+    getAndEatFood(typeOfFood) {
+        let found = false; // Bandera para saber si encontramos la comida.
+
+        // Recorremos el inventario.
         for (let i = 0; i < this.foodStorage.length; i++) {
+            // Comparamos nombres ignorando mayúsculas/minúsculas.
             if (typeOfFood.toLowerCase() === this.foodStorage[i].type.toLowerCase()) {
+
+                // Si encontramos el objeto Food correcto, llamamos a SU propio método eatOne().
+                // Delegamos la acción de "comer" al objeto Food.
                 this.foodStorage[i].eatOne();
+
                 found = true;
-                break;
+                break; // Terminamos el bucle, ya encontramos y comimos uno.
             }
         }
+
+        // Si terminamos el bucle y la bandera sigue en false, no estaba.
         if (!found) {
             console.log("Sorry, no such food in this refrigerator!");
         }
     }
 
-    getContents(){
+    // Muestra el inventario.
+    getContents() {
         console.log("-----------");
-        // Print contents
-        for(let i = 0; i < this.foodStorage.length; i++){
+        for (let i = 0; i < this.foodStorage.length; i++) {
+            // Accedemos directamente a las propiedades .type y .qty de los objetos Food guardados.
             console.log("|", this.foodStorage[i].type, this.foodStorage[i].qty)
         }
         console.log("-----------")
     }
 }
 
-let r = new Refrigerator();
+// --- USO PRINCIPAL ---
+
+let r = new Refrigerator(); // Creamos la nevera vacía.
+
+// Creamos comida.
 let apple = new Food('Apple', 2);
 let bananas = new Food('Banana', 3);
+
+// Guardamos la comida en la nevera.
 r.putFood(apple);
 r.putFood(bananas);
+
+// Checkeo inicial.
 r.getContents();
+
+// Comemos cosas.
 r.getAndEatFood('Apple');
 r.getAndEatFood('Apple');
 r.getAndEatFood('Banana');
-r.getAndEatFood('Apple');
-r.getAndEatFood('Kiwi');
+r.getAndEatFood('Apple'); // Intentamos comer una 3ra manzana (solo había 2, debería decir que se acabaron).
+r.getAndEatFood('Kiwi');  // No existe (debería decir que no hay).
+
+// Checkeo final.
 r.getContents();

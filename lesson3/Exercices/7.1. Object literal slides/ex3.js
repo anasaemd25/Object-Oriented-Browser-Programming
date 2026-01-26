@@ -1,3 +1,7 @@
+// ==========================================
+// USO AVANZADO DE ARRAYS: MAP Y SPREAD
+// ==========================================
+
 let countries = [
     {
         country: "Belgium",
@@ -17,6 +21,7 @@ let countries = [
         GDP: "$46000",
         iso3166: "DE"
     },
+    // ... otros países
     {
         country: "France",
         capital: "Paris",
@@ -37,8 +42,23 @@ let countries = [
     }
 ];
 
-function getMaxPop(arrayOfCountries){
-    console.log(Math.max(...arrayOfCountries.map(i=>i.population)))
+// Función para obtener la población máxima.
+function getMaxPop(arrayOfCountries) {
+
+    // Aquí ocurren dos operaciones avanzadas en una sola línea:
+
+    // 1. arrayOfCountries.map(i => i.population)
+    //    .map() transforma un array en otro. 
+    //    Toma cada objeto 'i' y devuelve solo su propiedad 'i.population'.
+    //    Resultado intermedio: [1090863, 83166711, 67413000, 10379295]
+
+    // 2. Math.max(...[array])
+    //    Math.max() espera argumentos separados por comas (e.g., Math.max(1, 2, 3)).
+    //    No acepta un array directamente.
+    //    El operador Spread (...) "expande" el array en argumentos individuales.
+    //    Equivale a: Math.max(1090863, 83166711, 67413000, 10379295)
+
+    console.log(Math.max(...arrayOfCountries.map(i => i.population)))
 }
 
-getMaxPop(countries)
+getMaxPop(countries) // Imprime 83166711 (Población de Alemania)

@@ -1,49 +1,34 @@
 function greetingsToYou(name) { // This is an outer function 
-  const createdAt
-= new Date(); 
+  const createdAt = new Date(); 
   function seasonSelector(type) { // This is an inner function 
- 
-  switch(type) { 
+    switch(type) { 
       case "Christmas": 
-        console.log("Merry christmas
-" + name); 
+        console.log("Merry christmas " + name); 
         break; 
 
       case "New Year": 
-        console.log("Happy
-new year " + name); 
+        console.log("Happy new year " + name); 
         break; 
 
       case "Day": 
-       
-console.log("Have a nice day " + name); 
+        console.log("Have a nice day " + name); 
         break; 
 
       default: 
-       
-console.log("Use either 'Christmas', 'New Year' or 'Day' as values"); 
+        console.log("Use either 'Christmas', 'New Year' or 'Day' as values"); 
     } 
-   
-console.log("This greeter was created on " + createdAt.toISOString()); 
+    console.log("This greeter was created on " + createdAt.toISOString()); 
   } 
-  return
-seasonSelector;  // Here the outer function returns the inner function 
+  return seasonSelector;  // Here the outer function returns the inner function 
 } 
 
-let
-initialTime = new Date();
-console.log("Initial time: " +
-initialTime.toISOString());
+let initialTime = new Date();
+console.log("Initial time: " + initialTime.toISOString());
 let greeter = greetingsToYou("Lasse"); 
 greeter(); 
-...
-...
-greeter("Christmas");
-//outputs'MerrychristmasLasse'anddatestamp 
-greeter("New Year");
-
+greeter("Christmas"); // outputs 'Merry christmas Lasse' and datestamp 
+greeter("New Year"); 
 greeter("Day"); 
 
 let finishTime = new Date();
-console.log("Finish time: " +
-finishTime.toISOString());
+console.log("Finish time: " + finishTime.toISOString());

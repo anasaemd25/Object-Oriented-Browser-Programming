@@ -6,7 +6,6 @@ function selfSum(p)
 
  
 
-let c = 2;
-
+let c = 2; 
 console.log(selfSum(c)); // 4 
 console.log(c); // 2

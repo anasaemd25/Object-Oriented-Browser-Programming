@@ -110,14 +110,19 @@ class Circle extends Shape {
     public containsPoint(x: number, y: number): boolean {
         const dx = x - this.x;
         const dy = y - this.y;
-        const distancia = Math.sqrt(dx * dx + dy * dy); // Hipotenusa
-        return distancia <= this.radius;
+        const distancia = Math.sqrt(dx * dx + dy * dy); // Hipotenusa // // Math.sqrt(Math.pow(dx,2) + Math.pwo(dx,2));
+        //return distancia <= this.radius;
+        if(distancia <= this.radius){
+            return true
+        }else{
+            return false
+        }
     }
 
     public distanceToCenter(x: number, y: number): number {
         let dx = x - this.x;
         let dy = y - this.y;
-        return Math.sqrt(dx * dx + dy * dy);
+        return Math.sqrt(dx * dx + dy * dy); 
     }
 
     public scale(factor: number): void {

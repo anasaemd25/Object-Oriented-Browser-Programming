@@ -3,7 +3,7 @@ EJERCICIO 5 (VERSIÓN TYPESCRIPT)
 Objetivo: Mismo ejercicio del refrigerador, pero usando TIPADO ESTÁTICO con TypeScript.
 */
 
-class Food {
+export class Food {
     // EN TYPESCRIPT, DEBEMOS DECLARAR LAS PROPIEDADES DE LA CLASE.
     // Esto no era necesario en JS puro (se declaraban en el constructor),
     // pero TS necesita saber qué propiedades existen y de qué tipo son.
@@ -31,7 +31,7 @@ class Food {
     }
 }
 
-class Refrigerator {
+export class Refrigerator {
     // Declaramos un array que SOLO puede contener objetos de tipo 'Food'.
     // Si intentamos meter un número o string aquí, TS dará error.
     foodStorage: Food[];
@@ -91,3 +91,6 @@ r.getAndEatFood('Banana');
 r.getAndEatFood('Apple');
 r.getAndEatFood('Kiwi');
 r.getContents();
+
+
+// ...use Food here...

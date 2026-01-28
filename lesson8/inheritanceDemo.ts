@@ -1,3 +1,10 @@
+interface CourseGrade {
+    courseName: string;
+    courseId: string;
+    grade: number;
+}
+
+// Clase base Person, representa una persona genérica
 class Person {
     name: string;
     dateOfBirth: string;
@@ -5,110 +12,112 @@ class Person {
     address: string;
     personId: number;
 
-    constructor(name: string, dob: string, email: string, address: string) {
+    constructor(name: string, dob: string, email: string, address: string){
         this.name = name;
         this.dateOfBirth = dob;
         this.email = email;
         this.address = address;
-        this.personId = Math.round( Math.random() * 10000000 );
+        // Genera un ID aleatorio para la persona
+        this.personId = Math.round(Math.random() * 100000);
+        // No es necesario pasar personId como parámetro, se genera automáticamente
     }
 
-    displayInfo() {
+    displayInfo(){
+        console.log("---------------------");
+        console.log("Personal Details");
+        console.log(`ID: ${this.personId}`);
         console.log(`Name: ${this.name}`);
-        console.log(`Date of Birth: ${this.dateOfBirth}`);
+        console.log(`DOB: ${this.dateOfBirth}`);
         console.log(`Email: ${this.email}`);
         console.log(`Address: ${this.address}`);
-        console.log(`Person ID: ${this.personId}`);
     }
 }
 
-interface CourseGrade {
-    courseName: string;
-    courseId: string;
-    grade: number;
-}
+// Ejemplo de creación de un objeto Person
+let test1 = new Person("Jose", "25/12/02", "jose@gmail.com", "Satama");
+// test1.displayInfo(); // Antes de llamar al método, hay que crear el objeto y luego usar variableNombre.metodoNombre()
 
-class Student extends Person {
+// Clase Student hereda de Person y añade funcionalidad específica de estudiantes
+class Student extends Person{
+    #completedCourses: CourseGrade[]; // Array privado para almacenar los cursos completados
     classIdentifier: string;
     dateOfAdmission: string;
-    #completedCourses: CourseGrade[];
 
     constructor(
         name: string, 
         dob: string, 
         email: string, 
         address: string, 
-        classId: string, 
-        doa: string
-    ) {
+        classId: string, // classId solo se usa aquí para generar el identificador de clase
+        doa: string, 
+    ){
         super(name, dob, email, address);
-        //this.classIdentifier = classId;
+        // Genera el identificador de clase usando el método privado y el classId proporcionado
         this.classIdentifier = this.#generateClassIdentifier(classId);
         this.dateOfAdmission = doa;
+        // Inicializa el array de cursos completados como vacío
         this.#completedCourses = [];
     }
 
-    // method to generate class identifier based on admission year
-    #generateClassIdentifier(curriculum: string): string {
-        // some logic to generate class identifier
-        return "GeneratedClassID";
+    // Método privado para generar un identificador de clase único
+    #generateClassIdentifier(curriculum: string){
+        // Devuelve un string con el formato COURSE-[curriculum]-[número aleatorio]
+        return `COURSE-${curriculum}-${Math.floor(Math.random()*2132534)}`;
     }
 
-    displayInfo(): void {
-        // super.displayInfo();
-        // console.log(`Class Identifier: ${this.classIdentifier}`);
-        // console.log(`Date of Admission: ${this.dateOfAdmission}`);
-        // console.log(`Completed Courses: ${this.completedCourses.length}`);
-        console.log('This is overridden method from Person class');
+    // Sobrescribe el método displayInfo para mostrar también info de estudiante
+    displayInfo() {
+        super.displayInfo(); // Llama al método de la clase padre
+        console.log(`ClassId: ${this.classIdentifier}`);
+        console.log(`DOA: ${this.dateOfAdmission}`);
+        console.log("---------------------");
     }
 
-    addCompletedCourse(courseName: string, courseId: string, grade: number) {
-        let newCourseGrade: CourseGrade = {
-            courseName: courseName,
-            courseId: courseId,
-            grade: grade
-        }
-        this.#completedCourses.push(newCourseGrade);
+    // Añade un curso completado al array privado
+    addCompletedCourse(courseName: string, courseId: string, grade: number){
+        // Crea un objeto CourseGrade con los datos proporcionados
+        let newCourseInfo: CourseGrade = {
+            courseName,
+            courseId,
+            grade
+        };
+        // Lo añade al array privado de cursos completados
+        this.#completedCourses.push(newCourseInfo);
     }
 
+    // Getter para acceder a los cursos completados (permite leerlos desde fuera)
     get completedCourses(): CourseGrade[] {
-
-        // we could have here some other logic if needed
-        // but now just return the private field directely
         return this.#completedCourses;
     }
 
-    // alternative getter syntax with regular method
-    getCompletedCourses(): CourseGrade[] {
-        return this.#completedCourses;
-    }
-
-    set completedCourses(value: CourseGrade[]) {
-        // we can have anylogic here if needed, for example some validation or something else
-        this.#completedCourses = value;
-    }
-    
-    // alternative setter syntax with regular method
-    setCompletedCourses(value: CourseGrade[]) {
+    // Setter para reemplazar el array de cursos completados (permite modificarlo desde fuera)
+    set completedCourses(value: CourseGrade[]){
         this.#completedCourses = value;
     }
 
-    // Then implement functionality to calculate the GPA of a student -> print to console. 
+    // Calcula el GPA (promedio de notas) de los cursos completados
+    calculateGPA(){
+        if(this.#completedCourses.length === 0){
+            console.log("No grades yet");
+            // Si no hay cursos, termina la función aquí
+            return;
+        }
+        // Suma todas las notas usando reduce
+        let total = this.#completedCourses.reduce((a, b) => a + b.grade, 0);
+        // Calcula el promedio dividiendo por la cantidad de cursos
+        let GPA = total / this.#completedCourses.length;
+        // Muestra el GPA con dos decimales
+        console.log(`GPA is: ${GPA.toFixed(2)} `);
+    }
 }
 
-let test = new Student("John Doe", "1.1.2000", "john@school.com", "Demo Road 1", "DIN25SP", "1.8.2025");
-test.displayInfo();
-console.log(test.completedCourses);
-console.log(test.getCompletedCourses());
-console.log(test.dateOfAdmission);
-// console.log(test.#generateClassIdentifier("DIN25SP"));  This should give an error because the method is private
-
-test.addCompletedCourse("Mathematics", "YY001-1001", 4);
-console.log(test);
-test.completedCourses = [];  // This should give an error because completedCourses has no setter
-test.setCompletedCourses([]); // This should work via the regular method implementation
-
-test.classIdentifier = "some new value";
-
-// Add at least four courses to your test student and scompleted.
-console.log(test);
+// Ejemplo de uso de la clase Student
+let student1 = new Student("Jose", "25/12/02", "jose@gmail.com", "Satama", "DIN25", "12/12/2025");
+student1.displayInfo();
+console.log("-------------Now we add some courses--------------------");
+student1.addCompletedCourse("Physics", "DIN25-Physics", 1);
+student1.addCompletedCourse("Meth", "DIN25-Meth", 4);
+student1.addCompletedCourse("OOP", "DIN25-OOP", 5);
+console.log("Print the courses", student1.completedCourses);
+student1.displayInfo();
+student1.calculateGPA();

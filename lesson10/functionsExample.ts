@@ -30,5 +30,3 @@ function example(param1) {
 
 example(15); 
 console.log(b); // this is not possible, because b is function scoped
-
-

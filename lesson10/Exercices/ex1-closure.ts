@@ -3,20 +3,13 @@
 // which allows the following code to execute and output correct
 /*** START YOUR CODE HERE */
 
-// The 'multiplier' function is a higher-order function (a function that returns another function).
-// It takes one argument 'param1' and returns a new function that takes 'param2'.
-// The inner function has access to 'param1' due to closure, allowing it to multiply 'param2' by 'param1'.
-const multiplier = (param1) => (param2) => param1 * param2;
+/*function multiplier(numMultiplier: number){
+    return function(secondNumber: number){
+        return numMultiplier * secondNumber;
+    }
+}*/
 
-/* 
-// Alternative implementation explicitely showing the closure structure
-function multiplier(param1){
-    return function(param2){
-        return param1 * param2;
-    };
-}
-// End of commented out code
-*/
+const multiplier = (a:number) => (b:number )=> a*b;
 
 /*** END YOUR CODE HERE */
 

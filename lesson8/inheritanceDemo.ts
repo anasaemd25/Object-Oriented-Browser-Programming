@@ -1,10 +1,15 @@
-// ==========================================
-// HERENCIA, INTERFACES Y ENCAPSULAMIENTO
-// ==========================================
+/**
+ * PART 1 & 2: Base structures
+ */
 
-// --- CLASE BASE (PADRE) ---
+// Interface defines the "shape" of a course object
+interface CourseGrade {
+    courseName: string;
+    courseId: string;
+    grade: number;
+}
+
 class Person {
-    // Definición de tipos de propiedades
     name: string;
     dateOfBirth: string;
     email: string;
@@ -16,127 +21,131 @@ class Person {
         this.dateOfBirth = dob;
         this.email = email;
         this.address = address;
-
-        // Asignación de un ID aleatorio al crearse la persona.
+        // Generates a random ID between 0 and 10,000,000
         this.personId = Math.round(Math.random() * 10000000);
     }
 
-    // Método común para cualquier persona.
     displayInfo() {
+        console.log(`--- Personal Info ---`);
+        console.log(`ID: ${this.personId}`);
         console.log(`Name: ${this.name}`);
-        console.log(`Date of Birth: ${this.dateOfBirth}`);
+        console.log(`DOB: ${this.dateOfBirth}`);
         console.log(`Email: ${this.email}`);
         console.log(`Address: ${this.address}`);
-        console.log(`Person ID: ${this.personId}`);
     }
 }
 
-// --- INTERFAZ ---
-// Define la "forma" que debe tener un objeto.
-// No genera código JS, solo sirve para verificación en TS.
-interface CourseGrade {
-    courseName: string;
-    courseId: string;
-    grade: number;
-}
-
-// --- CLASE HIJA (SUBCLASE) ---
-// 'extends' significa que Student HEREDA todas las propiedades y métodos de Person.
+/**
+ * PART 3: The Specialized Student Class
+ */
 class Student extends Person {
     classIdentifier: string;
     dateOfAdmission: string;
-
-    // CAMPO PRIVADO (Sintaxis ECMAScript #)
-    // El prefijo '#' hace que la propiedad sea verdaderamente privada en tiempo de ejecución (JS moderno).
-    // Solo se puede acceder a ella dentro de esta clase.
+    // The '#' makes this field TRULY private (hard encapsulation)
     #completedCourses: CourseGrade[];
 
     constructor(
-        name: string,
-        dob: string,
-        email: string,
-        address: string,
-        classId: string,
+        name: string, 
+        dob: string, 
+        email: string, 
+        address: string, 
+        classId: string, 
         doa: string
     ) {
-        // 'super' llama al constructor de la clase padre (Person).
-        // DEBE ser la primera línea en el constructor de la subclase.
+        // super() calls the constructor of the Person class
         super(name, dob, email, address);
-
-        // Método privado para generar ID
-        this.classIdentifier = this.#generateClassIdentifier(classId);
+        
         this.dateOfAdmission = doa;
-        this.#completedCourses = []; // Inicializamos el array vacío.
+        this.#completedCourses = [];
+        // We use a private method to set a value during construction
+        this.classIdentifier = this.#generateClassIdentifier(classId);
     }
 
-    // MÉTODOS PRIVADOS (#)
-    // Solo usables dentro de la clase Student.
+    // Private method: only accessible inside this class
     #generateClassIdentifier(curriculum: string): string {
-        return "GeneratedClassID";
+        return "COURSE-" + curriculum + "-" + Math.floor(Math.random() * 100);    
     }
 
-    // SOBRESCITURA (OVERRIDING)
-    // Volvemos a definir displayInfo, reemplazando la versión del padre.
+    // OVERRIDING: We rewrite the parent's method to add more details
     displayInfo(): void {
-        // super.displayInfo(); // Podríamos llamar a la versión original si quisiéramos.
-        console.log('This is overridden method from Person class');
+        super.displayInfo(); // This runs the logic from Person
+        console.log(`Class ID: ${this.classIdentifier}`);
+        console.log(`Admission Date: ${this.dateOfAdmission}`);
+        console.log(`Courses Completed: ${this.#completedCourses.length}`);
+        console.log(`---------------------`);
     }
 
     addCompletedCourse(courseName: string, courseId: string, grade: number) {
-        // Creamos un objeto que cumple con la interfaz CourseGrade.
-        let newCourseGrade: CourseGrade = {
-            courseName: courseName,
-            courseId: courseId,
-            grade: grade
-        }
+        const newCourseGrade: CourseGrade = { courseName, courseId, grade };
         this.#completedCourses.push(newCourseGrade);
     }
 
-    // --- GETTERS Y SETTERS ---
-    // Permiten controlar el acceso a las propiedades privadas.
-    // Se usan como propiedades: student.completedCourses (sin paréntesis).
-
+    /** * ACCESSORS (Getters & Setters)
+     * These allow us to control how the private #completedCourses is handled
+     */
+    
+    // Usage: student.completedCourses (Looks like a property, acts like a method)
     get completedCourses(): CourseGrade[] {
-        // Podemos añadir lógica antes de devolver el valor (ej: logging).
         return this.#completedCourses;
     }
 
-    // Setter tradicional (Sintaxis 'set' palabra clave)
+    // Usage: student.completedCourses = []
     set completedCourses(value: CourseGrade[]) {
-        // Aquí podríamos validar 'value' antes de asignarlo.
+        console.log("Updating courses via setter property...");
         this.#completedCourses = value;
     }
 
-    // Método setter alternativa "Java-style"
-    setCompletedCourses(value: CourseGrade[]) {
-        this.#completedCourses = value;
-    }
-
-    // Método getter alternativo "Java-style"
+    // Alternative: Regular method style (Common in Java/C#)
     getCompletedCourses(): CourseGrade[] {
         return this.#completedCourses;
     }
+
+    setCompletedCourses(value: CourseGrade[]) {
+        console.log("Updating courses via regular method...");
+        this.#completedCourses = value;
+    }
+
+    /**
+     * PART 4: GPA Calculation Logic
+     */
+    calculateGPA(): void {
+        if (this.#completedCourses.length === 0) {
+            console.log(`GPA: 0.0 (No courses completed for ${this.name})`);
+            return;
+        }
+
+        // reduce sums up all grades. The '0' at the end is the starting point.
+        const sum = this.#completedCourses.reduce((acc, course) => acc + course.grade, 0);
+        const gpa = sum / this.#completedCourses.length;
+
+        console.log(`Final GPA for ${this.name}: ${gpa.toFixed(2)}`);
+    }
 }
 
-// --- USO ---
+/**
+ * EXECUTION AND VALIDATION
+ */
 
-let test = new Student("John Doe", "1.1.2000", "john@school.com", "Demo Road 1", "DIN25SP", "1.8.2025");
+// 1. Instantiate Student
+let testStudent = new Student("John Doe", "01-01-2000", "john@school.com", "Demo Road 1", "DIN25SP", "01-08-2025");
 
-test.displayInfo(); // Ejecuta la versión sobrescrita de Student.
+// 2. Add 4 courses
+testStudent.addCompletedCourse("Mathematics", "MATH101", 4);
+testStudent.addCompletedCourse("Physics", "PHYS202", 3);
+testStudent.addCompletedCourse("Programming", "PROG303", 5);
+testStudent.addCompletedCourse("History", "HIST404", 4);
 
-// Acceso mediante Getter
-console.log(test.completedCourses);
+// 3. Display Info & GPA
+testStudent.displayInfo();
+testStudent.calculateGPA();
 
-// test.#generateClassIdentifier(...) // ERROR: Es privado.
-// test.#completedCourses // ERROR: Es privado.
+// 4. Privacy Check (Uncommenting these would cause TypeScript errors)
+// console.log(testStudent.#completedCourses); // Error: Private field
+// testStudent.#generateClassIdentifier("TEST"); // Error: Private method
 
-test.addCompletedCourse("Mathematics", "YY001-1001", 4);
-console.log(test);
+// 5. Demonstrating Setters
+testStudent.setCompletedCourses([]); // Using the regular method
+console.log("Courses after method clear:", testStudent.completedCourses.length);
 
-// Uso de setters
-test.completedCourses = []; // Usa 'set completedCourses'
-test.setCompletedCourses([]); // Usa el método normal
-
-test.classIdentifier = "some new value"; // Público, acceso directo.
-
-console.log(test);
+testStudent.completedCourses = [{ courseName: "Logic", courseId: "LOGIC1", grade: 5 }]; // Using the property setter
+console.log("Courses after property setter:", testStudent.completedCourses.length);

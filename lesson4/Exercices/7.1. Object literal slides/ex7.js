@@ -17,6 +17,7 @@ The function should print out for each country.
     the percentage of the population in those cities out of the total population in the country
 */
 
+// Extended countries data with 'largestCity' array
 let countries = [
     {
         country: "Belgium",
@@ -27,11 +28,11 @@ let countries = [
         GDP: 50135,
         iso3166: "BE",
         largestCity: [
-            {name: "Brussels", population: 1019022 },
-            {name: "Antwerp", population: 529247 },
-            {name: "Ghent", population: 265086 },
-            {name: "Charleroi", population: 200132 },
-            {name: "Liège", population: 195278 }
+            { name: "Brussels", population: 1019022 },
+            { name: "Antwerp", population: 529247 },
+            { name: "Ghent", population: 265086 },
+            { name: "Charleroi", population: 200132 },
+            { name: "Liège", population: 195278 }
         ]
     },
     {
@@ -43,11 +44,11 @@ let countries = [
         GDP: 46000,
         iso3166: "DE",
         largestCity: [
-            {name: "Berlin", population: 3520000 },
-            {name: "Hamburg", population: 1790000 },
-            {name: "Munich", population: 1450000 },
-            {name: "Cologne", population: 1060000 },
-            {name: "Frankfurt", population: 733000 }
+            { name: "Berlin", population: 3520000 },
+            { name: "Hamburg", population: 1790000 },
+            { name: "Munich", population: 1450000 },
+            { name: "Cologne", population: 1060000 },
+            { name: "Frankfurt", population: 733000 }
         ]
     },
     {
@@ -59,11 +60,11 @@ let countries = [
         GDP: 41400,
         iso3166: "FR",
         largestCity: [
-            {name: "Paris", population: 2110000 },
-            {name: "Marseille", population: 870000 },
-            {name: "Lyon", population: 522000 },
-            {name: "Toulouse", population: 498000 },
-            {name: "Nice", population: 344000 }
+            { name: "Paris", population: 2110000 },
+            { name: "Marseille", population: 870000 },
+            { name: "Lyon", population: 522000 },
+            { name: "Toulouse", population: 498000 },
+            { name: "Nice", population: 344000 }
         ]
     },
     {
@@ -75,30 +76,41 @@ let countries = [
         GDP: 55400,
         iso3166: "SE",
         largestCity: [
-            {name: "Stockholm", population: 1515017 },
-            {name: "Gothenburg", population: 572799 },
-            {name: "Malmö", population: 301706 },
-            {name: "Uppsala", population: 149245 },
-            {name: "Västerås", population: 117746 }
+            { name: "Stockholm", population: 1515017 },
+            { name: "Gothenburg", population: 572799 },
+            { name: "Malmö", population: 301706 },
+            { name: "Uppsala", population: 149245 },
+            { name: "Västerås", population: 117746 }
         ]
     }
 ];
 
-function printCountryInfo(countriesArray){
-    for(let country of countriesArray){
+// Function to calculate and print detailed statistics for each country
+function printCountryInfo(countriesArray) {
+    // Iterate through each country object in the array
+    for (let country of countriesArray) {
         console.log("Country:", country.country);
         console.log("Population:", country.population);
         console.log("5 Biggest cities:");
+
+        // Initialize sum for city populations
         let citiesSum = 0;
-        for(let city of country.largestCity){
+
+        // Iterate through the array of largest cities for the current country
+        for (let city of country.largestCity) {
             console.log(city.name + ":", city.population);
-            citiesSum += city.population;
+            citiesSum += city.population; // Add current city's population to the sum
         }
+
         console.log("Total population of the cities:", citiesSum);
+
+        // Calculate percentage: (Part / Whole) * 100
         let percentageCities = (citiesSum / country.population) * 100;
+
+        // Print usage of .toFixed(1) to round to 1 decimal place
         console.log("Percentage of the population in these cities:", percentageCities.toFixed(1) + "%");
         console.log("--------------------------");
-        
+
     }
 }
 

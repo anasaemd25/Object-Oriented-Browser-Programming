@@ -4,7 +4,7 @@ interface CourseGrade {
     grade: number;
 }
 
-// Clase base Person, representa una persona genérica
+// Base class Person, represents a generic person
 class Person {
     name: string;
     dateOfBirth: string;
@@ -12,17 +12,17 @@ class Person {
     address: string;
     personId: number;
 
-    constructor(name: string, dob: string, email: string, address: string){
+    constructor(name: string, dob: string, email: string, address: string) {
         this.name = name;
         this.dateOfBirth = dob;
         this.email = email;
         this.address = address;
-        // Genera un ID aleatorio para la persona
+        // Generates a random ID for the person
         this.personId = Math.round(Math.random() * 100000);
-        // No es necesario pasar personId como parámetro, se genera automáticamente
+        // personId is not passed as a parameter; it is generated automatically inside the constructor
     }
 
-    displayInfo(){
+    displayInfo() {
         console.log("---------------------");
         console.log("Personal Details");
         console.log(`ID: ${this.personId}`);
@@ -33,85 +33,90 @@ class Person {
     }
 }
 
-// Ejemplo de creación de un objeto Person
+// Example of creating a Person object
 let test1 = new Person("Jose", "25/12/02", "jose@gmail.com", "Satama");
-// test1.displayInfo(); // Antes de llamar al método, hay que crear el objeto y luego usar variableNombre.metodoNombre()
+// test1.displayInfo(); // Before calling the method, the object must be created. Usage: objectName.methodName()
 
-// Clase Student hereda de Person y añade funcionalidad específica de estudiantes
-class Student extends Person{
-    #completedCourses: CourseGrade[]; // Array privado para almacenar los cursos completados
+// Class Student inherits from Person and adds specific student functionality
+class Student extends Person {
+    #completedCourses: CourseGrade[]; // Private array (using # syntax) to store completed courses
     classIdentifier: string;
     dateOfAdmission: string;
 
     constructor(
-        name: string, 
-        dob: string, 
-        email: string, 
-        address: string, 
-        classId: string, // classId solo se usa aquí para generar el identificador de clase
-        doa: string, 
-    ){
+        name: string,
+        dob: string,
+        email: string,
+        address: string,
+        classId: string, // classId is only used here to generate the classIdentifier
+        doa: string,
+    ) {
+        // super() calls the constructor of the parent class (Person)
         super(name, dob, email, address);
-        // Genera el identificador de clase usando el método privado y el classId proporcionado
+
+        // Use the internal private method to generate a unique class identifier
         this.classIdentifier = this.#generateClassIdentifier(classId);
         this.dateOfAdmission = doa;
-        // Inicializa el array de cursos completados como vacío
+
+        // Initialize the private array of completed courses as empty
         this.#completedCourses = [];
     }
 
-    // Método privado para generar un identificador de clase único
-    #generateClassIdentifier(curriculum: string){
-        // Devuelve un string con el formato COURSE-[curriculum]-[número aleatorio]
-        return `COURSE-${curriculum}-${Math.floor(Math.random()*2132534)}`;
+    // Private method to generate a unique class identifier
+    #generateClassIdentifier(curriculum: string) {
+        // Returns a string in the format COURSE-[curriculum]-[random number]
+        return `COURSE-${curriculum}-${Math.floor(Math.random() * 2132534)}`;
     }
 
-    // Sobrescribe el método displayInfo para mostrar también info de estudiante
+    // Overrides the displayInfo method to show student-specific info as well
     displayInfo() {
-        super.displayInfo(); // Llama al método de la clase padre
+        super.displayInfo(); // Call the parent class's displayInfo method first
         console.log(`ClassId: ${this.classIdentifier}`);
         console.log(`DOA: ${this.dateOfAdmission}`);
         console.log("---------------------");
     }
 
-    // Añade un curso completado al array privado
-    addCompletedCourse(courseName: string, courseId: string, grade: number){
-        // Crea un objeto CourseGrade con los datos proporcionados
+    // Adds a completed course to the private array
+    addCompletedCourse(courseName: string, courseId: string, grade: number) {
+        // Create a CourseGrade object with the provided data
         let newCourseInfo: CourseGrade = {
             courseName,
             courseId,
             grade
         };
-        // Lo añade al array privado de cursos completados
+        // Push it to the private completedCourses array
         this.#completedCourses.push(newCourseInfo);
     }
 
-    // Getter para acceder a los cursos completados (permite leerlos desde fuera)
+    // Getter to access completed courses (allows reading from outside)
     get completedCourses(): CourseGrade[] {
         return this.#completedCourses;
     }
 
-    // Setter para reemplazar el array de cursos completados (permite modificarlo desde fuera)
-    set completedCourses(value: CourseGrade[]){
+    // Setter to replace the array of completed courses (allows modification from outside)
+    set completedCourses(value: CourseGrade[]) {
         this.#completedCourses = value;
     }
 
-    // Calcula el GPA (promedio de notas) de los cursos completados
-    calculateGPA(){
-        if(this.#completedCourses.length === 0){
+    // Calculates the GPA (average grade) of the completed courses
+    calculateGPA() {
+        if (this.#completedCourses.length === 0) {
             console.log("No grades yet");
-            // Si no hay cursos, termina la función aquí
+            // If there are no courses, exit the function early
             return;
         }
-        // Suma todas las notas usando reduce
+        // Sum all grades using the reduce method
         let total = this.#completedCourses.reduce((a, b) => a + b.grade, 0);
-        // Calcula el promedio dividiendo por la cantidad de cursos
+
+        // Calculate average by dividing total by the number of courses
         let GPA = total / this.#completedCourses.length;
-        // Muestra el GPA con dos decimales
+
+        // Display GPA formatted to 2 decimal places
         console.log(`GPA is: ${GPA.toFixed(2)} `);
     }
 }
 
-// Ejemplo de uso de la clase Student
+// Example usage of the Student class
 let student1 = new Student("Jose", "25/12/02", "jose@gmail.com", "Satama", "DIN25", "12/12/2025");
 student1.displayInfo();
 console.log("-------------Now we add some courses--------------------");

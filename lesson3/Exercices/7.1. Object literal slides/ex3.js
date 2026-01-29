@@ -1,3 +1,4 @@
+// Array of Object Literals representing countries
 let countries = [
     {
         country: "Belgium",
@@ -37,8 +38,12 @@ let countries = [
     }
 ];
 
-function getMaxPop(arrayOfCountries){
-    console.log(Math.max(...arrayOfCountries.map(i=>i.population)))
+// Function to find and print the maximum population
+function getMaxPop(arrayOfCountries) {
+    // 1. arrayOfCountries.map(i => i.population) transforms the array of objects into an array of just population numbers.
+    // 2. The spread operator (...) expands this array into individual arguments for Math.max().
+    // 3. Math.max() returns the largest number.
+    console.log(Math.max(...arrayOfCountries.map(i => i.population)))
 }
 
 getMaxPop(countries)

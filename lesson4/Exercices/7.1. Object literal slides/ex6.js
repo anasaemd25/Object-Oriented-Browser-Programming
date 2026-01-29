@@ -1,3 +1,4 @@
+// Array of country objects
 let countries = [
     {
         country: "Belgium",
@@ -38,9 +39,15 @@ let countries = [
 ];
 
 
-function GDP(list){
+function GDP(list) {
+    // [...list] creates a SHALLOW COPY of the array using the spread operator.
+    // This is important because .sort() mutates the original array. We want to sort the copy, not the original source data.
+
     [...list]
-    .sort((a , b) => b.GDP - a.GDP)
-    .forEach(c=>console.log(c.GDP, " - ", c.country))
+        // .sort(compareFunction) sorts elements.
+        // if b.GDP - a.GDP is positive, b comes before a (Descending order).
+        .sort((a, b) => b.GDP - a.GDP)
+        // .forEach() executes a provided function once for each array element.
+        .forEach(c => console.log(c.GDP, " - ", c.country))
 }
 GDP(countries)

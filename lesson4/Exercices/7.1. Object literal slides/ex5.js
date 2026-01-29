@@ -1,3 +1,4 @@
+// Array of country objects
 let countries = [
     {
         country: "Belgium",
@@ -37,7 +38,9 @@ let countries = [
     }
 ];
 
-function countryCode(countriesArray){
+function countryCode(countriesArray) {
+    // .map() creates a new array populated with the results of calling a provided function on every element in the calling array.
+    // Here, it extracts the 'iso3166' property from each country object.
     console.log(countriesArray.map(country => country.iso3166));
 }
 

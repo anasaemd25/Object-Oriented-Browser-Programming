@@ -1,5 +1,6 @@
 // Reusing calculateAverage and printStudentGPAInfo from Ex4
 
+// Function to calculate the average of an array of numbers
 function calculateAverage(arrayOfNumbers) {
     let sum = 0;
     for (let i = 0; i < arrayOfNumbers.length; i++) {
@@ -8,13 +9,14 @@ function calculateAverage(arrayOfNumbers) {
     return sum / arrayOfNumbers.length;
 }
 
+// Function to print information for a single student object
 function printStudentGPAInfo(studentObject) {
-    let gpa = calculateAverage(studentObject.grades);
-    gpa = gpa.toFixed(2);
+    let gpa = calculateAverage(studentObject.grades); // Calculate GPA
+    gpa = gpa.toFixed(2); // Format to 2 decimal places
     console.log(studentObject.name + " (ID: " + studentObject.studentId + ")" + " has a GPA of " + gpa)
 }
 
-// New for Ex5: array of students
+// New for Ex5: array of student objects
 let students = [
     {
         name: "Joe",
@@ -33,12 +35,14 @@ let students = [
     }
 ];
 
-// New function for Ex5
+// New function for Ex5 to process an array of students
 function printStudentsGPAInfo(arrayOfStudents) {
+    // Iterate through the array of student objects
     for (let i = 0; i < arrayOfStudents.length; i++) {
+        // Reuse the function to print info for the current student
         printStudentGPAInfo(arrayOfStudents[i]);
     }
 }
 
-// Call the function
+// Call the main function with the list of students
 printStudentsGPAInfo(students);

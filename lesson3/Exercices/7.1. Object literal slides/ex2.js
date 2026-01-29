@@ -1,3 +1,5 @@
+// Array of Object Literals
+// Each element in the array is an object representing a country
 let countries = [
     {
         country: "Belgium",
@@ -37,10 +39,16 @@ let countries = [
     }
 ];
 
-function countryPopulation(countryInfo){
-    for(let countryData of countryInfo ){
-        console.log(countryData.country +  " population " + countryData.population)
+// Function to print population of each country
+// Accepts an array of country objects
+function countryPopulation(countryInfo) {
+    // Using a for...of loop to iterate through the array
+    // 'countryData' will hold the current object in each iteration
+    for (let countryData of countryInfo) {
+        // Acessing properties using dot notation
+        console.log(countryData.country + " population " + countryData.population)
     }
 }
 
+// Call the function passing the array of countries
 countryPopulation(countries);

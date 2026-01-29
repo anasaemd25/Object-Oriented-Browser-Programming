@@ -21,50 +21,58 @@ Sorry, no such food in this refrigerator!
 -----------
 */
 
-class Food{
+// Define Food class with Type annotations
+class Food {
+    // Define properties and their types
     type: string;
     qty: number;
-    constructor(typeOfFood: string, quantity: number){
+
+    // Constructor with typed parameters
+    constructor(typeOfFood: string, quantity: number) {
         this.type = typeOfFood;
         this.qty = quantity;
     }
 
-    whatIsThis(){
+    whatIsThis() {
         console.log(this.type);
     }
 
-    eatOne(){
-        if(this.qty > 0){
+    eatOne() {
+        if (this.qty > 0) {
             this.qty--;
             console.log("Slurp! One", this.type.toLowerCase(), "eaten.", this.qty, "remaining");
         }
-        else{
+        else {
             console.log("Sorry, no more", this.type.toLowerCase(), "remaining!")
         }
     }
 }
 
-class Refrigerator{
+class Refrigerator {
+    // Define public property 'foodStorage' as an array of 'Food' objects
     foodStorage: Food[];
 
-    constructor(){
-        this.foodStorage = [];
+    constructor() {
+        this.foodStorage = []; // Initialize as empty array
     }
 
-    putFood(food: Food){
+    // Method accepts a parameter of type 'Food'
+    putFood(food: Food) {
         // add food to the storage in this refrigerator
         this.foodStorage.push(food);
     }
 
-    getAndEatFood(typeOfFood: string){
+    getAndEatFood(typeOfFood: string) {
         let found = false;
         for (let i = 0; i < this.foodStorage.length; i++) {
             // Check the names, if they are same, then we have found our food
             if (typeOfFood.toLowerCase() === this.foodStorage[i].type.toLowerCase()) {
                 this.foodStorage[i].eatOne();
                 found = true;
-                if(this.foodStorage[i].qty == 0){
-                    // remove food when qty is 0
+
+                // Additional logic in TS version: Remove item from array if quantity hits 0
+                if (this.foodStorage[i].qty == 0) {
+                    // remove food when qty is 0. splice(index, count)
                     this.foodStorage.splice(i, 1);
                 }
                 break;
@@ -75,10 +83,10 @@ class Refrigerator{
         }
     }
 
-    getContents(){
+    getContents() {
         console.log("-----------");
         // Print contents
-        for(let i = 0; i < this.foodStorage.length; i++){
+        for (let i = 0; i < this.foodStorage.length; i++) {
             console.log("|", this.foodStorage[i].type, this.foodStorage[i].qty)
         }
         console.log("-----------")

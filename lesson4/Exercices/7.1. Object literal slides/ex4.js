@@ -1,3 +1,4 @@
+// Array of country objects
 let countries = [
     {
         country: "Belgium",
@@ -37,7 +38,11 @@ let countries = [
     }
 ];
 
-function totalPop(popInfo){
+function totalPop(popInfo) {
+    // .reduce(callback, initialValue) executes a reducer function on each element of the array.
+    // acc: accumulator (accumulates the return values)
+    // curr: current value (current element being processed)
+    // 0 is the initial value for the accumulator.
     let sum = popInfo.reduce((acc, curr) => acc + curr.population, 0)
     console.log(sum);
 }

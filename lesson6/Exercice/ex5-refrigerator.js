@@ -21,70 +21,89 @@ Sorry, no such food in this refrigerator!
 -----------
 */
 
-class Food{
-    constructor(typeOfFood, quantity){
+// Class representing a Food item
+class Food {
+    constructor(typeOfFood, quantity) {
         this.type = typeOfFood;
         this.qty = quantity;
     }
 
-    whatIsThis(){
+    whatIsThis() {
         console.log(this.type);
     }
 
-    eatOne(){
-        if(this.qty > 0){
+    // Method to decrease quantity
+    eatOne() {
+        if (this.qty > 0) {
             this.qty--;
             console.log("Slurp! One", this.type.toLowerCase(), "eaten.", this.qty, "remaining");
         }
-        else{
+        else {
             console.log("Sorry, no more", this.type.toLowerCase(), "remaining!")
         }
     }
 }
 
-class Refrigerator{
-    constructor(){
+// Class representing the Refrigerator container
+class Refrigerator {
+    constructor() {
+        // Initialize an empty array to store Food objects
         this.foodStorage = [];
     }
 
-    putFood(food){
+    // Stores a Food object in the refrigerator
+    putFood(food) {
         // add food to the storage in this refrigerator
         this.foodStorage.push(food);
     }
 
-    getAndEatFood(typeOfFood){
-        let found = false;
+    // Finds a food item by name and eats one unit
+    getAndEatFood(typeOfFood) {
+        let found = false; // Flag to track if food was found
+
+        // Loop through everything in storage
         for (let i = 0; i < this.foodStorage.length; i++) {
+            // Check if the current item matches the requested type (case-insensitive)
             if (typeOfFood.toLowerCase() === this.foodStorage[i].type.toLowerCase()) {
+                // Call the eatOne method of the found Food object
                 this.foodStorage[i].eatOne();
                 found = true;
-                break;
+                break; // Stop searching once found
             }
         }
+
+        // If the loop finishes without finding the food
         if (!found) {
             console.log("Sorry, no such food in this refrigerator!");
         }
     }
 
-    getContents(){
+    // Method to display all contents of the refrigerator
+    getContents() {
         console.log("-----------");
-        // Print contents
-        for(let i = 0; i < this.foodStorage.length; i++){
+        // Print contents by iterating through the storage
+        for (let i = 0; i < this.foodStorage.length; i++) {
             console.log("|", this.foodStorage[i].type, this.foodStorage[i].qty)
         }
         console.log("-----------")
     }
 }
 
-let r = new Refrigerator();
-let apple = new Food('Apple', 2);
-let bananas = new Food('Banana', 3);
-r.putFood(apple);
-r.putFood(bananas);
-r.getContents();
+// Usage Example
+let r = new Refrigerator();       // Create Refrigerator
+let apple = new Food('Apple', 2); // Create Food: Apple
+let bananas = new Food('Banana', 3); // Create Food: Banana
+
+r.putFood(apple);   // Put Apple in Refrigerator
+r.putFood(bananas); // Put Banana in Refrigerator
+
+r.getContents(); // Check contents
+
+// Eat some food
 r.getAndEatFood('Apple');
 r.getAndEatFood('Apple');
 r.getAndEatFood('Banana');
-r.getAndEatFood('Apple');
-r.getAndEatFood('Kiwi');
-r.getContents();
+r.getAndEatFood('Apple'); // Consuming more (might be empty)
+r.getAndEatFood('Kiwi');  // Trying to eat something that doesn't exist
+
+r.getContents(); // property check final state

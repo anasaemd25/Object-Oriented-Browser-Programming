@@ -21,3 +21,4 @@ Thumbs.db
 
 # Ignore testTest folder
 testTest/
+testTest/test.ts

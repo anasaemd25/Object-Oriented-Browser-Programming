@@ -5,45 +5,53 @@ Modify the checkAge() function to be pure.
 */
 
 const users = [{
-    name:"John",
+    name: "John",
     age: 33
-    },
-    {
-    name:"Maxine",
+},
+{
+    name: "Maxine",
     age: 24
-    },
-    {
-    name:"Ted",
+},
+{
+    name: "Ted",
     age: 12
-    },
+},
 ]
 
-// Impure version: This function has a hardcoded ageLimit inside it, making it less flexible and 
-// potentially impure if the limit needs to vary without modifying the function code.
-// It depends on the input 'user' but the ageLimit is not configurable, which can be seen as a form of impurity in terms of reusability.
+// Impure version: 
+// This function relies on a hardcoded value 'ageLimit' inside it.
+// While it doesn't change external state, it is "opaque" or rigid. 
+// A truly reusable (and functional) approach would treat the limit as a parameter.
 function checkAge(user) {
     const ageLimit = 18;
-    if(user.age < ageLimit){
+    if (user.age < ageLimit) {
         return false;
-    }else{
+    } else {
         return true;
     }
     // return user.age >= ageLimit;
 }
 
-// Alternative version: Simplified logic, but still has the same issue as checkAge – the ageLimit is hardcoded, limiting flexibility.
+// Alternative version: 
+// Still impure in the sense of 'hardcoded dependency'. 
+// It does not allow the caller to decide what the age limit is.
+// It simply performs the check and returns a boolean.
 function checkAge2(user) {
     const ageLimit = 18;
     return user.age >= ageLimit;
 }
 
-// Pure version: This function takes both the user and ageLimit as parameters, making it fully pure. 
-// Its output depends only on the inputs, with no hardcoded values.
-// Pure functions are more testable, reusable, and predictable, as they don't rely on internal constants that can't be changed externally.
+// Pure version: 
+// 1. Deterministic: For the same inputs (user, ageLimit), it ALWAYS returns the same output.
+// 2. No Side Effects: It doesn't change anything outside itself.
+// Included 'ageLimit' as a parameter makes it flexible and dependency-free.
+// This allows the function to be tested easily with different limits (e.g., 21, 16).
 function checkAge3(user, ageLimit) {
     return user.age >= ageLimit;
 }
 
+// The ternary operator (condition ? exprIfTrue : exprIfFalse) is used here for concise conditional logging.
+// It checks the result of checkAge and prints the corresponding string.
 console.log(checkAge(users[0]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");
 console.log(checkAge2(users[1]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");
 console.log(checkAge3(users[2]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");

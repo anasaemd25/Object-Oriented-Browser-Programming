@@ -3,15 +3,19 @@
 Here is a function which finds the minimum value from array values. 
 */
 
-const values = [533,235,223,56,88,2,6,88,664];
+const values = [533, 235, 223, 56, 88, 2, 6, 88, 664];
 
-// Impure version: This function relies on the global 'values' array, making it impure because its output depends on external state.
-// It has side effects in the sense that changing the global array would affect the function's behavior without changing the function itself.
+// Impure version:
+// BAD: It accesses 'values' from the global scope.
+// If 'values' changes (mutated by someone else), this function's result changes. 
+// This makes it unpredictable and hard to test.
 function minValue() {
     let min = null;
-    for(let i = 0; i < values.length; i++) {
-        if((min == null) || (values[i] < min)) {
-        min = values[i];
+    // Iterate through the array to find the smallest number
+    for (let i = 0; i < values.length; i++) {
+        // Initialize 'min' with the first element or update it if a smaller value is found
+        if ((min == null) || (values[i] < min)) {
+            min = values[i];
         }
     }
     return min;
@@ -22,16 +26,19 @@ console.log(minimum); // 2
 
 // Write a pure version of a function which finds minimum value in an array.
 
-const values2 = [533,235,223,56,88,2,6,88,664];
+const values2 = [533, 235, 223, 56, 88, 2, 6, 88, 664];
 
-// Pure version: This function takes the array as a parameter, making it pure. 
-// It has no side effects and its output depends only on the input parameters.
-// Pure functions are predictable, testable, and easier to reason about.
+// Pure version:
+// GOOD: It requests the data it needs via arguments ('values').
+// It does not touch the outside world.
+// It creates local variables only.
 function minValuePure(values) {
     let min = null;
-    for(let i = 0; i < values.length; i++) {
-        if((min == null) || (values[i] < min)) {
-        min = values[i];
+    // Loop through the input array
+    for (let i = 0; i < values.length; i++) {
+        // If 'min' is currently null (start of search) OR current element is less than 'min'
+        if ((min == null) || (values[i] < min)) {
+            min = values[i];
         }
     }
     return min;

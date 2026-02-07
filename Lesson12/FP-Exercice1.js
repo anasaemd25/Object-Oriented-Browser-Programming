@@ -53,5 +53,7 @@ function checkAge3(user, ageLimit) {
 // The ternary operator (condition ? exprIfTrue : exprIfFalse) is used here for concise conditional logging.
 // It checks the result of checkAge and prints the corresponding string.
 console.log(checkAge(users[0]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");
+
 console.log(checkAge2(users[1]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");
-console.log(checkAge3(users[2]) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");
+
+console.log(checkAge3(users[2], 18) ? "Access granted you're 18+" : "Access denied, you must be at least 18 years old.");

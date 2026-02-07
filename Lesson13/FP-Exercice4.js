@@ -31,4 +31,8 @@ function ageArray() {
     return users.map(user => user.age);
 }
 
+// Also possible with an arrow function:
+let ages = () => users.map(user => user.age);
+
 console.log(ageArray());
+console.log(ages());

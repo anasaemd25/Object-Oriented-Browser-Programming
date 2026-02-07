@@ -9,9 +9,11 @@ const add = (a, b) => a + b;
 // Calling add() with no arguments results in undefined + undefined which is NaN.
 // typeof NaN is 'number', so this logs 'number'.
 console.log(typeof (add())); 
+
 function add2(a, b) {
 	return a + b;
 }
+
 console.log(add(1, 2));
 console.log(add2(1, 2));
 
@@ -22,12 +24,17 @@ console.log(add2(1, 2));
 // Impure functions are harder to debug because their output depends on the state of the system, not just inputs.
 // If SECRET changes, the function's output changes for the same input.
 let SECRET = 42;
+
 const getId = (a) => SECRET * a;
+
 function getId2(a) {
 	return SECRET * a;
 }
+
 console.log(getId(2));
+
 SECRET = 5; // Changing external state affects the function output
+
 console.log(getId2(2));
 
 // SIDE EFFECTS:
@@ -36,9 +43,16 @@ console.log(getId2(2));
 // A pure function should only depend on its inputs and return a value without changing external state.
 // Side effects include: modifying globals, console.log, DOM manipulation, HTTP requests.
 let id_count = 0;
+
 const getId3 = () => ++id_count;
+
 function getId4() {
 	return ++id_count;
 }
+
 console.log(getId3());
+
 console.log(getId4());
+
+// Pure version: 
+const getId4 = (id_countInput) => ++id_countInput;

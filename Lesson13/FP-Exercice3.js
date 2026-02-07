@@ -5,12 +5,13 @@ function.
 */
 
 const values = [5, 11, 394, 2, 576];
-console.log("VALUES 1 B4 SPLICE:", values);
+
+console.log("VALUES 1 B4 SPLICE:", values); // prints 5, 11, 394, 2, 576
 // SPLICE (Impure / Mutating):
 // This method changes the contents of `values` directly. 
 // It returns the removed elements, but the original array is forever changed.
-values.splice(2, 1);
-console.log("VALUES 1 AFTER SPLICE:", values);
+values.splice(2, 1); // Removes 1 element at index 2 (the number 394)
+console.log("VALUES 1 AFTER SPLICE:", values); // prints 5, 11, 2, 576 (394 is removed)
 
 /*
 Create function called pureSplice() which accepts an array (all elements are numbers) and returns
@@ -39,19 +40,22 @@ function pureSplice(array, start, deleteCount){
 }
 */
 
-console.table(values2);
-const newArray = pureSplice(values2, 2, 1);
-console.log("Result after pureSplice:", newArray);
-console.log("VALUES2 outside the function (unchanged):", values2);
+console.table(values2); // prints 5, 11, 394, 2, 576 (original array is unchanged)
+
+const newArray = pureSplice(values2, 2, 1); // newArray is a new array with the element at index 2 removed (394), but values2 remains unchanged.
+
+console.log("Result after pureSplice:", newArray); // prints 5, 11, 2, 576 (394 is removed in the new array)
+console.log("VALUES2 outside the function (unchanged):", values2); // prints 5, 11, 394, 2, 576 (original array is still intact)
 
 /*
 Create function called pureSplice() which accepts an array (all elements are numbers) and returns
 a new array with elements removed in similar fashion as regular splice(startingIndex,
 deleteCount).
 */
+
 const values4 = [5, 11, 394, 2, 576];
 values4.splice(2, 1);
-console.table(values4);
+console.table(values4); // prints 5, 11, 2, 576 (394 is removed)
 
 const values5 = [5, 11, 394, 2, 576];
 // IMMUTABILITY PATTERN:
@@ -62,10 +66,12 @@ const values5 = [5, 11, 394, 2, 576];
 // The original `array` remains untouched.
 function pureSplice(array, start, deleteCount) {
     let newArray = array.slice(); // Shallow copy
+    // let newArray = [...array] Alternative using spread operator
     newArray.splice(start, deleteCount);
     return newArray;
 }
-console.table(values5);
-let newArray2 = pureSplice(values5, 2, 1);
-console.table(values5);
-console.table(newArray2);
+
+console.table(values5); // prints 5, 11, 394, 2, 576 (original array is unchanged)
+let newArray2 = pureSplice(values5, 2, 1); // newArray2 is a new array with the element at index 2 removed (394), but values5 remains unchanged.
+console.log("Result after pureSplice:", newArray2); // prints 5, 11, 2, 576 (394 is removed in the new array)
+console.log("VALUES5 outside the function (unchanged):", values5); // prints 5, 11, 394, 2, 576 (original array is still intact)

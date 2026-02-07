@@ -19,6 +19,9 @@ function minValue() {
         }
     }
     return min;
+
+    // Alternative using built-in function (still impure due to global 'values'):
+    // return Math.min(...values); 
 }
 
 const minimum = minValue();
@@ -42,6 +45,9 @@ function minValuePure(values) {
         }
     }
     return min;
+
+    // Alternative using built-in function (still pure since it only depends on input):
+    // return Math.min(...values);
 }
 
 const minimum2 = minValuePure(values2);

@@ -94,7 +94,7 @@ const twice = (x) => {
 	x();
 }
 
-twice(() => console.log("Saluditos"));
+twice( () => console.log("Saludos") );
 
 //Also 
 const Saluditos2 = () => console.log("Saluditos");

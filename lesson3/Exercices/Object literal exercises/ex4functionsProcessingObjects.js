@@ -21,6 +21,8 @@ function calculateAverage(arrayOfNumbers) {
     for (let i = 0; i < arrayOfNumbers.length; i++) {
         sum += arrayOfNumbers[i];
     }
+    // Alt wih reduce method:
+    // let sum = arrayOfNumbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     // Divide sum by count to get average
     let avg = sum / arrayOfNumbers.length;
     return avg;

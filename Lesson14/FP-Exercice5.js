@@ -28,10 +28,10 @@ const users = [{
 ]
 
 const addLastName = (lastName) => {
-    return users.map( user => {
-        return {
-            ...user,
-            name: `${user.name} ${lastName}`
+    return users.map( user => { // Crea un nuevo array con map
+        return { // Retorna un nuevo objeto para cada usuario
+            ...user, // Copia las propiedades existentes
+            name: `${user.name} ${lastName}` // Modifica el nombre
         }
     })
 }

@@ -46,7 +46,7 @@ function minValuePure(values) {
     }
     return min;
 
-    // Alternative using built-in function (still pure since it only depends on input):
+    // Using math.min with spread operator is also pure since it only depends on the input array:
     // return Math.min(...values);
 }
 

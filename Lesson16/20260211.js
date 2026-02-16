@@ -1,10 +1,11 @@
-alert("Hello from first");
+// alert("Hello from JS");
 
 // Access the element by ID 
 const heading = document.getElementById("heading1");
 
 // Change the text
-heading.textContent = "New title";
+heading.textContent = "New Heading Text";
+
 
 // Change the style (as in your HTML comment)
 heading.setAttribute("style", "color: red; margin: 50px;");

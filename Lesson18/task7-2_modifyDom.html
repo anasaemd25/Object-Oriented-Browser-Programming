@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <style>
+            .demo {
+                font-style: italic;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Exercise template for modifying the DOM</h1>
+        <div>
+            <p id="ExampleID" class="demo">Hello world</p>
+            <p class="demo" name="testName">Some content of paragraph</p>
+            <p class="demo" name="testName">Another content of paragraph</p>
+        </div>
+        <div>
+            <b>Task 1</b>
+            <p>Your task is to write code to replace the "Hello world" text above in the paragraph with text "I can modify text".
+            Create a button here below to activate your code when you click on it.</p>
+        </div>
+        <div>
+            <b>Task 2</b>
+            <p>Write code which replaces the children of all divs with text "I have replaced everything".</p>
+        </div>
+        <div>
+            <b>Task 3</b>
+            <p>Write code, which inserts into a single div containing an image (https://www.w3.org/html/logo/img/html5-display.png) and text "AN HTML5 LOGO". That content should be laid out vertically stacked and centered on the page.</p>
+        </div>
+
+        <script>
+            // Task 1
+            let button = document.createElement("button");
+            button.innerHTML= "DO NOT CLICK HERE";
+            document.body.appendChild(button);
+            button.style.background = "aqua";
+            button.style.color = "purple";
+            button.id = "buttonClick";
+
+            let buttonClick = document.getElementById("buttonClick");
+
+            buttonClick.onclick = function () {
+                document.getElementById("ExampleID").innerHTML = "I can modify text";
+            }
+
+            // Task 2
+            let br1 = document.createElement("br");
+            let br2 = document.createElement("br");
+            document.body.appendChild(br1);
+            document.body.appendChild(br2);
+
+            let button2 = document.createElement("button");
+            button2.innerHTML = " REPLACE ALL DIVS " 
+            document.body.appendChild(button2);
+            button2.style.background = "YELLOW";
+            button2.style.color = "GREEN";
+            button2.id = "buttonClick2";
+
+            let buttonClick2 = document.getElementById("buttonClick2");
+
+
+            buttonClick2.onclick = function () {
+                let allDivs = document.getElementsByTagName("div");
+                [...allDivs].forEach( x => {
+                    x.innerHTML = "I have replaced everything";
+                })
+            }
+
+            // Task 3
+            let newDiv = document.createElement("div");
+            newDiv.innerHTML = '<img src="https://www.w3.org/html/logo/img/html5-display.png" alt="HTML5 Logo">';
+            document.body.appendChild(newDiv);
+            newDiv.style.textAlign = "center";
+            let img = newDiv.querySelector("img");
+            img.style.width = "350px";
+            // newDiv.getElementsByTagName("img")[0].style.width = "10px"
+
+            
+
+            
+
+        </script>
+    </body>
+</html>

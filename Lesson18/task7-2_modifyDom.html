@@ -49,14 +49,13 @@
             document.body.appendChild(br2);
 
             let button2 = document.createElement("button");
-            button2.innerHTML = " REPLACE ALL DIVS " 
+            button2.innerHTML = " REPLACE ALL DIVS ";
             document.body.appendChild(button2);
             button2.style.background = "YELLOW";
             button2.style.color = "GREEN";
             button2.id = "buttonClick2";
 
             let buttonClick2 = document.getElementById("buttonClick2");
-
 
             buttonClick2.onclick = function () {
                 let allDivs = document.getElementsByTagName("div");
@@ -67,16 +66,12 @@
 
             // Task 3
             let newDiv = document.createElement("div");
-            newDiv.innerHTML = '<img src="https://www.w3.org/html/logo/img/html5-display.png" alt="HTML5 Logo">';
+            newDiv.innerHTML = '<img width = "350px" src="https://www.w3.org/html/logo/img/html5-display.png" alt="HTML5 Logo"> <p> AN HTML5 LOGO </p>';
             document.body.appendChild(newDiv);
             newDiv.style.textAlign = "center";
             let img = newDiv.querySelector("img");
-            img.style.width = "350px";
+            // img.style.width = "350px";
             // newDiv.getElementsByTagName("img")[0].style.width = "10px"
-
-            
-
-            
 
         </script>
     </body>

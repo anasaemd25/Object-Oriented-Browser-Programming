@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <style>
+            .productCard {
+                display: flex;
+            }
+            .productCard img {
+                width: 200px;
+            }
+
+            .productInfo {
+                padding-left: 40px;
+            }
+
+            .productInfo h2 {
+                font-size: 18px;
+                font-weight: normal;
+            }
+        </style>
+    </head>
+
+    <body>
+        <button id="addProductBtn">Add product With Create Element</button>
+        
+        <div class="productList"></div>
+
+        <script>
+            // Product data
+            const products = [
+                {
+                    name: "EOS 90D",
+                    image: "https://raw.githubusercontent.com/lassehav-oamk/ObjectOrientedBrowserProgramming/main/2_DOM/exercises/images/eos-90d.jpg",
+                    specs: [
+                        "32.5 megapixels, 10 frames per second",
+                        "4K video, 1300 frames per battery, ISO 25600"
+                    ]
+                }
+            ];
+
+            document.getElementById("addProductBtn").onclick = function() {
+                const productList = document.querySelector(".productList");
+                
+                const productCard = document.createElement("div");
+                productCard.className = "productCard";
+                
+                // Create image element
+                const img = document.createElement("img");
+                img.src = products[0].image;
+                img.alt = products[0].name;
+                productCard.appendChild(img);
+                
+                // Create product info container
+                const productInfo = document.createElement("div");
+                productInfo.className = "productInfo";
+                
+                // Create title
+                const h1 = document.createElement("h1");
+                h1.appendChild(document.createTextNode(products[0].name));
+                productInfo.appendChild(h1);
+                
+                // Create spec paragraphs
+                products[0].specs.forEach(spec => {
+                    const h2 = document.createElement("h2");
+                    h2.appendChild(document.createTextNode(spec));
+                    productInfo.appendChild(h2);
+                });
+                
+                productCard.appendChild(productInfo);
+                productList.appendChild(productCard);
+            };
+
+        </script>
+
+    </body>
+
+</html>

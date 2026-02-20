@@ -25,6 +25,56 @@
         <div class="productList"></div>
 
         <script>
+
+            const camera = [
+                {
+                    name: "EOS 90D",
+                    image: "https://raw.githubusercontent.com/lassehav-oamk/ObjectOrientedBrowserProgramming/main/2_DOM/exercises/images/eos-90d.jpg",
+                    specs: [
+                        "32.5 megapixels, 10 frames per second",
+                        "4K video, 1300 frames per battery, ISO 25600"
+                    ]
+                }
+            ];
+
+            let addProductBtn = document.getElementById("addProductBtn");
+            let productList = document.querySelector(".productList");
+            
+            addProductBtn.onclick = function () {
+                const productCard = document.createElement("div");
+                productCard.className = "productCard"
+
+                const img = document.createElement("img");
+                img.src = camera[0].image;
+                img.alt = camera[0].name;
+                productCard.appendChild(img);
+
+                const divSpec = document.createElement("div");
+                divSpec.className= "productInfo";
+
+                const h1 = document.createElement("h1");
+                const cameraText = document.createTextNode(camera[0].name);
+                h1.appendChild(cameraText);
+                divSpec.appendChild(h1);
+
+                const h2Spec1 = document.createElement("h2");
+                const h2Spec2 = document.createElement("h2");
+                const spec1 = document.createTextNode(camera[0].specs[0]);
+                const spec2 = document.createTextNode(camera[0].specs[1]);
+                h2Spec1.appendChild(spec1);
+                h2Spec2.appendChild(spec2);
+                divSpec.append(h2Spec1);
+                divSpec.append(h2Spec2);
+
+                productCard.appendChild(divSpec);
+                productList.appendChild(productCard);
+            }
+
+        </script>
+
+
+        <script>
+        /*    
             // Product data
             const products = [
                 {
@@ -68,7 +118,7 @@
                 productCard.appendChild(productInfo);
                 productList.appendChild(productCard);
             };
-
+        */
         </script>
 
     </body>
